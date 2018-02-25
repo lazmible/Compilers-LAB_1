@@ -46,8 +46,30 @@ int main()
 	//yyin = fopen("my.txt", "r");
 	//yyparse();
 	//printf("\n");
+	//std::vector<std::pair<int, int>> lol;
 
-	std::cout << std::defaultfloat <<  Polynom({1,-2,-3}) + Polynom({ 1,2,-3 }) << std::endl;
+	//lol.push_back(std::make_pair(1, 0));
+	//lol.push_back(std::make_pair(3, 0));
+	//lol.push_back(std::make_pair(1, 1));
+	//lol.push_back(std::make_pair(5, 1));
+	//lol.push_back(std::make_pair(1, 2));
+	//lol.push_back(std::make_pair(7, 2));
+	//lol.push_back(std::make_pair(1, 3));
+	//lol.push_back(std::make_pair(2, 3));
+	//lol.push_back(std::make_pair(1, 4));
+	//lol.push_back(std::make_pair(1, 4));
+	//lol.push_back(std::make_pair(1, 5));
+	//lol.push_back(std::make_pair(3, 5));
+
+	Polynom kek({ 1,2 });
+	Polynom lol({ 1,2 });
+
+	std::cout << kek << std::endl;
+	std::cout << kek * lol << std::endl;
+
+//	std::cout <<  Polynom({1,-2,-3}) + Polynom({ 1,2,-3 }) << std::endl;
+
+
 
 	system("pause");
 }
