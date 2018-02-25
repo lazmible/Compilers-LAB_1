@@ -47,7 +47,7 @@ int main()
 	//yyparse();
 	//printf("\n");
 
-	std::cout << Polynom({1,-2,-3}) << std::endl;
+	std::cout << std::defaultfloat <<  Polynom({1,-2,-3}) + Polynom({ 1,2,-3 }) << std::endl;
 
 	system("pause");
 }
