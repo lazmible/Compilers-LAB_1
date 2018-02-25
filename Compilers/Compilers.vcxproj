@@ -115,8 +115,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="c:\Users\tremy\Desktop\6 семестр материалы\Компиляторы\Пока еще не лаба\prog.cpp" />
-    <ClCompile Include="C:\Users\tremy\Desktop\6 семестр материалы\Компиляторы\Пока еще не лаба\y_tab.c" />
+    <ClCompile Include="polynom.cpp" />
+    <ClCompile Include="prog.cpp" />
+    <ClCompile Include="y_tab.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="polynom.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

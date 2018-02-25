@@ -15,11 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\tremy\Desktop\6 семестр материалы\Компиляторы\Пока еще не лаба\y_tab.c">
+    <ClCompile Include="polynom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="c:\Users\tremy\Desktop\6 семестр материалы\Компиляторы\Пока еще не лаба\prog.cpp">
+    <ClCompile Include="prog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="y_tab.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="polynom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
