@@ -29,7 +29,7 @@ void Polynom::AddSuchTerms()
 		TempVector.push_back(temp);
 	}
 	std::sort(TempVector.begin(), TempVector.end(), 
-	[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
+		[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
 	coeff = TempVector;
 }
 
@@ -78,7 +78,7 @@ Polynom Polynom::operator + (const Polynom & other)
 	}
 
 	std::sort(ret.begin(), ret.end(),
-	[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
+		[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
 
 	return Polynom(ret);
 }
@@ -100,7 +100,7 @@ Polynom Polynom::operator - (const Polynom & other)
 	}
 	
 	std::sort(ret.begin(), ret.end(),
-	[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
+		[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
 
 	return ret;
 }
@@ -123,5 +123,5 @@ Polynom Polynom::operator * (const Polynom & other)
 	std::sort(_ret.coeff.begin(), _ret.coeff.end(),
 		[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
 
-	return Polynom(ret);
+	return _ret;
 }
