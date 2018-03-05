@@ -4,7 +4,7 @@ extern "C"
 {
 	#include "y_tab.h"
 	extern int yyparse();
-//	extern int yyval;
+	extern int yyval;
 }
 
 #include "polynom.h"
@@ -26,8 +26,9 @@ extern "C"
 		if (c == '-')   { return (MINUS); }
 		if (isdigit(c)) 
 		{
-			yylval = c - '0';
-			return (DIGIT); 
+			yylval = c - '0'; 
+			return (DIGIT);
+			//std::string kek = std::string("abc");
 		}
 
 		return (c);	
@@ -36,6 +37,7 @@ extern "C"
 	int yyerror(char * c)
 	{
 		puts("error");
+		//std::cout << "error" << std::endl;
 		return -1;
 	}
 }
@@ -46,30 +48,28 @@ int main()
 	//yyin = fopen("my.txt", "r");
 	//yyparse();
 	//printf("\n");
-	//std::vector<std::pair<int, int>> lol;
 
-	//lol.push_back(std::make_pair(1, 0));
-	//lol.push_back(std::make_pair(3, 0));
-	//lol.push_back(std::make_pair(1, 1));
-	//lol.push_back(std::make_pair(5, 1));
-	//lol.push_back(std::make_pair(1, 2));
-	//lol.push_back(std::make_pair(7, 2));
-	//lol.push_back(std::make_pair(1, 3));
-	//lol.push_back(std::make_pair(2, 3));
-	//lol.push_back(std::make_pair(1, 4));
-	//lol.push_back(std::make_pair(1, 4));
-	//lol.push_back(std::make_pair(1, 5));
-	//lol.push_back(std::make_pair(3, 5));
-
-	Polynom kek({ 1,2 });
-	Polynom lol({ 1,2 });
-
-	std::cout << kek << std::endl;
-	std::cout << kek * lol << std::endl;
-
-//	std::cout <<  Polynom({1,-2,-3}) + Polynom({ 1,2,-3 }) << std::endl;
+	Variable x1('x', 3);
+	Variable x2('y', 2);
+	Variable x3('x', 4);
+	Variable x4('y', 4);
 
 
+	PolynomEntry p1(-5, { x1, x2, });
+	PolynomEntry p2(1, { x3, x4, });
 
+	std::vector<PolynomEntry> ppp;
+	ppp.push_back(p1);
+	ppp.push_back(p2);
+
+	Polynom _p1(p1);
+	Polynom _p2(p2);
+
+	std::cout << _p1 << std::endl << _p2 << std::endl;
+
+	std::cout << _p1 * _p2 << std::endl;
+
+
+	
 	system("pause");
 }

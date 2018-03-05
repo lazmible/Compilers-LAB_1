@@ -1,127 +1,91 @@
 #include "polynom.h"
 
-Polynom::Polynom(std::vector<int> coeff)
+std::ostream & operator << (std::ostream & stream, const Variable & var)
 {
-	for (size_t i = 0; i < coeff.size(); i++)
-	{
-		this->coeff.push_back(std::make_pair(coeff[i], i));
-	}
+	if (var.degree > 1)			{ stream << var.letter << "^" << var.degree; }
+	else if (var.degree == 1)   { stream << var.letter;                      }
+	else if (var.degree == 0)   { stream << "";                              }
+	return stream;
 }
 
-Polynom::Polynom(std::vector<std::pair<int, int>> coeff)
+std::ostream & operator << (std::ostream & stream, const PolynomEntry & entry)
 {
-	this->coeff = coeff;
-}
-
-void Polynom::AddSuchTerms()
-{
-	int degree = this->GetDegree();
-	std::vector<std::pair<int, int>> TempVector;
-
-	for (int i = 0; i <= degree; i++)
-	{
-		std::pair<int, int> temp = { 0, 0 };
-		for (auto it : this->coeff)
-		{
-			temp.second = i;
-			if (it.second == i) { temp.first += it.first; }
-		}
-		TempVector.push_back(temp);
-	}
-	std::sort(TempVector.begin(), TempVector.end(), 
-		[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
-	coeff = TempVector;
-}
-
-int Polynom::GetDegree()
-{
-	int ret = coeff.begin()->second;
-	for (auto it = ++coeff.begin(); it != coeff.end(); it++)
-	{
-		if (ret < it->second) { ret = it->second; }
-	}
-	return ret;
+	if (entry.coeff != 1 && entry.coeff != -1) { stream << std::abs(entry.coeff); }
+	for (auto it : entry.var) { stream << it; }
+	return stream;
 }
 
 std::ostream & operator << (std::ostream & stream, const Polynom & poly)
 {
-	// TODO: Fix x^1 to print as x.
-	auto fst = poly.coeff.rbegin();
-	stream << (fst->first >= 0 ? "" : " - ") 
-		<< (fst->first != 0 ? std::to_string(std::abs(fst->first)) + "x^" + std::to_string(fst->second) : "");
+	std::vector<PolynomEntry> entries = poly.entries;
 
-	for (auto it = ++poly.coeff.rbegin(); it != poly.coeff.rend(); it++)
+	if (!entries.empty())
 	{
-		stream << (it->first != 0 ? (it->first >= 0 ? " + " : " - ") : "")
-		<< (it->first != 0 ? 
-		std::to_string(std::abs(it->first)) + (it->second != 0 ? "x^" + std::to_string(it->second) : "") : "");
-	}
+		auto first = entries.begin();
 
+		if (first->GetCoeff() < 0) { stream << " - " << *first; }
+		else if (first->GetCoeff() > 0) { stream << *first; }
+
+		entries.erase(first);
+
+		for (auto it : entries)
+		{
+			if (it.GetCoeff() > 0) { stream << " + " << it; }
+			else if (it.GetCoeff() < 0) { stream << " - " << it; }
+		}
+	}
 	return stream;
 }
 
 Polynom Polynom::operator + (const Polynom & other)
 {
-	std::vector<std::pair<int, int>> ret;
+	std::vector<PolynomEntry> ret;
 	
-	this->AddSuchTerms();
+//	this->AddSuchTerms();
 
-	for (auto it : this->coeff)
-	{
-		for (auto it_oth : other.coeff)
-		{
-			if (it.second == it_oth.second) 
-			{
-				ret.push_back(std::make_pair(it.first + it_oth.first, it.second)); 
-			}
-		}
-	}
+	for (auto it : this->entries) { ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); }
+	for (auto it : other.entries) { ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); }
 
-	std::sort(ret.begin(), ret.end(),
-		[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
+	Polynom _ret(ret);
 
-	return Polynom(ret);
+	//std::sort(ret.begin(), ret.end(),
+	//	[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
+
+	return _ret;
 }
 
 Polynom Polynom::operator - (const Polynom & other)
 {
-	std::vector<std::pair<int, int>> ret;
-	this->AddSuchTerms();
-
-	for (auto it : this->coeff)
-	{
-		for (auto it_oth : other.coeff)
-		{
-			if (it.second == it_oth.second)
-			{
-				ret.push_back(std::make_pair(it.first - it_oth.first, it.second));
-			}
-		}
-	}
+	std::vector<PolynomEntry> ret;
 	
-	std::sort(ret.begin(), ret.end(),
-		[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
+	for (auto it : this->entries) { ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); }
 
-	return ret;
+	for (auto it : other.entries) { ret.push_back(PolynomEntry(-it.GetCoeff(), it.GetVar())); }
+
+	Polynom _ret(ret);
+	
+	/*std::sort(ret.begin(), ret.end(),
+		[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });*/
+
+	return _ret;
 }
 
 Polynom Polynom::operator * (const Polynom & other)
 {
-	std::vector<std::pair<int, int>> ret;
+	std::vector<PolynomEntry> ret;
 
-	for (auto it : this->coeff)
+	for (auto it : this->entries)
 	{
-		for (auto it_oth : other.coeff)
+		for (auto it_oth : other.entries)
 		{
-			ret.push_back(std::make_pair(it.first * it_oth.first, it.second + it_oth.second));
+			ret.push_back(it * it_oth);
 		}
 	}
 	
 	Polynom _ret(ret);
-	_ret.AddSuchTerms();
 
-	std::sort(_ret.coeff.begin(), _ret.coeff.end(),
-		[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
+	//std::sort(_ret.coeff.begin(), _ret.coeff.end(),
+	//	[](std::pair<int, int> & first, std::pair<int, int> & second) { return first.second < second.second; });
 
 	return _ret;
 }

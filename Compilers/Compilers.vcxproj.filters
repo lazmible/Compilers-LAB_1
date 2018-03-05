@@ -24,9 +24,21 @@
     <ClCompile Include="y_tab.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="variable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="entry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="polynom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="variable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

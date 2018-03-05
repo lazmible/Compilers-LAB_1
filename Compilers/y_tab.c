@@ -8,7 +8,9 @@
 #define	PLUS	259
 #define	MINUS	260
 
-#define alloca() malloc()
+#line 1 "1.y"
+
+	#define alloca malloc	
 
 #ifndef YYLTYPE
 typedef
@@ -88,7 +90,7 @@ static const short yyrhs[] = {     7,
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-     3,     3,     5,     5,     7,     7
+     8,     9,    11,    12,    14,    15
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","DIGIT",
@@ -628,27 +630,27 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 3 "1.y"
-{ yyval = yyvsp[-2] + yyvsp[-1]*yyvsp[0]; /*printf("%d\n", $$);*/ ;
+#line 8 "1.y"
+{ yyval = yyvsp[-2] + yyvsp[-1]*yyvsp[0]; ;
     break;}
 case 2:
-#line 4 "1.y"
+#line 9 "1.y"
 { yyval = yyvsp[-2] + yyvsp[-1]*yyvsp[0]; printf("%d\n", yyval); ;
     break;}
 case 3:
-#line 5 "1.y"
+#line 11 "1.y"
 { yyval = yyvsp[0] ;
     break;}
 case 4:
-#line 6 "1.y"
+#line 12 "1.y"
 { yyval = yyvsp[-1] * 10 + yyvsp[0]; ;
     break;}
 case 5:
-#line 7 "1.y"
-{ yyval = 1; ;
+#line 14 "1.y"
+{ yyval = 1;  ;
     break;}
 case 6:
-#line 8 "1.y"
+#line 15 "1.y"
 { yyval = -1; ;
     break;}
 }
@@ -849,4 +851,4 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 9 "1.y"
+#line 16 "1.y"

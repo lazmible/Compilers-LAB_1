@@ -2,20 +2,24 @@
 
 #include <iostream>
 #include <vector>
-#include <string>
 #include <algorithm>
+
+#include "variable.h"
+#include "entry.h"
 
 class Polynom
 {
 private:
-	std::vector<std::pair<int, int>> coeff;
-	void AddSuchTerms();
-	int GetDegree();
+	std::vector<PolynomEntry> entries;
 
 public:
 	Polynom() {}
-	Polynom(std::vector<int>);
-	Polynom(std::vector<std::pair<int, int>>);
+	Polynom(Polynom & other)
+		: entries(other.entries) {}
+	Polynom(std::vector<PolynomEntry> & other)
+		: entries(other) {}
+	Polynom(PolynomEntry & other)
+	{ entries.push_back(other); }
 	~Polynom() {}
 
 	Polynom operator = (const Polynom &);
@@ -25,5 +29,4 @@ public:
 	Polynom operator / (const Polynom &);
 
 	friend std::ostream & operator << (std::ostream & stream, const Polynom & poly);
-//	friend std::istream & operator >> (std::istream & stream, const Polynom & poly);
 };
