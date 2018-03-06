@@ -117,7 +117,7 @@
   <ItemGroup>
     <ClCompile Include="entry.cpp" />
     <ClCompile Include="polynom.cpp" />
-    <ClCompile Include="prog.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="variable.cpp" />
     <ClCompile Include="y_tab.c" />
   </ItemGroup>

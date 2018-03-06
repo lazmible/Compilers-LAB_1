@@ -1,10 +1,12 @@
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 
 class Variable
 {
+
 private:
 
 	char letter;
@@ -12,9 +14,12 @@ private:
 
 public:
 
-	Variable() : letter('a'), degree(0) {}
+	Variable() 
+		: letter('a'), degree(0) {}
 	Variable(char l, long int d)
 		: letter(l), degree(d) {}
+	~Variable()
+		{}
 
 	const char     GetLetter() const;
 	const long int GetDegree() const;

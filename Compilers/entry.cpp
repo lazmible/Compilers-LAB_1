@@ -5,25 +5,70 @@ const std::string alphabet =
 	"abcdefghijklmnopqrstuvwxyz"
 };
 
+std::ostream & operator << (std::ostream & stream, const PolynomEntry & entry)
+{
+	if (entry.coeff != 1 && entry.coeff != -1) { stream << std::abs(entry.coeff); }
+	for (auto it : entry.var) { stream << it; }
+	return (stream);
+}
+
+void PolynomEntry::AddSuch()
+{
+	std::vector<Variable> ret_var;
+
+	for (auto alph : alphabet)
+	{
+		Variable temp;
+		bool flag = false;
+		for (auto letter : this->GetVar())
+		{
+			if (letter.GetLetter() == alph)
+			{
+				temp.SetLetter(alph);
+				temp.IncDegree(letter.GetDegree());
+				flag = true;
+			}
+		}
+		if (flag) { ret_var.push_back(temp); }
+	}
+
+	this->var = ret_var;
+}
+
+void PolynomEntry::IncCoeff(long c)
+{
+	this->coeff += c;
+}
 
 bool PolynomEntry::operator == (const PolynomEntry & other) const 
 {
-	return this->var == other.var; 
+	return (this->var == other.var && this->GetCoeff() == other.GetCoeff()); 
 }
 
 bool PolynomEntry::operator != (const PolynomEntry & other) const 
 {
-	return this->var != other.var; 
+	return (!((*this) == other));
 }
 
 const long int PolynomEntry::GetCoeff() const
 {
-	return this->coeff;
+	return (this->coeff);
 }
 
 const std::vector<Variable> PolynomEntry::GetVar() const
 {
-	return this->var;
+	return (this->var);
+}
+
+const long int PolynomEntry::GetDegree() const
+{
+	long int result = 0;
+	
+	for (auto it : this->GetVar())
+	{
+		result += it.GetDegree();
+	}
+	return (result);
 }
 
 PolynomEntry PolynomEntry::operator * (const PolynomEntry & other) const
@@ -35,20 +80,8 @@ PolynomEntry PolynomEntry::operator * (const PolynomEntry & other) const
 	for (auto it : this->GetVar()) { ret_var_temp.push_back(it); }
 	for (auto it : other.GetVar()) { ret_var_temp.push_back(it); }
 
-	for (auto alph : alphabet)
-	{
-		for (auto letter : ret_var_temp)
-		{
-			Variable temp;
-			bool flag = false;
-			if (letter.GetLetter() == alph)
-			{
-				temp.SetLetter(alph);
-				temp.IncDegree(letter.GetDegree());
-				flag = true;
-			}
-			if (flag) { ret_var.push_back(temp); }
-		}
-	}
-	return PolynomEntry(ret_coeff, ret_var);
+	PolynomEntry ret(ret_coeff, ret_var_temp);
+	ret.AddSuch();
+
+	return (ret);
 }
