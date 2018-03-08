@@ -24,7 +24,7 @@ const char Variable::GetLetter() const
 	return (this->letter);
 }
 
-const long int Variable::GetDegree() const
+const long Variable::GetDegree() const
 {
 	return (this->degree);
 }
@@ -34,7 +34,7 @@ void Variable::SetLetter(char l)
 	this->letter = l;
 }
 
-void Variable::IncDegree(long int d) 
+void Variable::IncDegree(long d) 
 {
 	this->degree += d;
 }

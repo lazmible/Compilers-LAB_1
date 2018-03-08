@@ -50,7 +50,7 @@ bool PolynomEntry::operator != (const PolynomEntry & other) const
 	return (!((*this) == other));
 }
 
-const long int PolynomEntry::GetCoeff() const
+const long PolynomEntry::GetCoeff() const
 {
 	return (this->coeff);
 }
@@ -60,7 +60,7 @@ const std::vector<Variable> PolynomEntry::GetVar() const
 	return (this->var);
 }
 
-const long int PolynomEntry::GetDegree() const
+const long PolynomEntry::GetDegree() const
 {
 	long int result = 0;
 	

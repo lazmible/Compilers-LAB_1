@@ -10,7 +10,7 @@ class PolynomEntry
 
 private:
 
-	long int coeff;
+	long coeff;
 	std::vector<Variable> var;
 
 public:
@@ -26,9 +26,9 @@ public:
 	~PolynomEntry()
 		{}
 
-	const long int               GetCoeff  ()  const;
+	const long                   GetCoeff  ()  const;
 	const std::vector<Variable>  GetVar    ()  const;
-	const long int               GetDegree ()  const;
+	const long                   GetDegree ()  const;
 	void                         AddSuch   ()       ;
 	void                         IncCoeff  (long)   ;
 

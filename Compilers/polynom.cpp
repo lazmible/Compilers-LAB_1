@@ -22,9 +22,9 @@ std::ostream & operator << (std::ostream & stream, const Polynom & poly)
 	return (stream);
 }
 
-const long int Polynom::GetDegree() const
+const long Polynom::GetDegree() const
 {
-	long int result = 0;
+	long result = 0;
 	for (auto it : this->entries)
 	{
 		result = result > it.GetDegree() ? it.GetDegree() : result;
@@ -48,14 +48,9 @@ void Polynom::AddSuch()
 	while (!_entries.empty())
 	{
 		PolynomEntry temp = *(_entries.begin());
-		// shitcode start
-		for (auto it = _entries.begin(); it != _entries.end();)
-		{
-			if (*it == temp) { it = _entries.erase(it); }
 
-			else { it++; }
-		}
-		// shitcode end
+		if (_entries.begin() != _entries.end()) { _entries.erase(_entries.begin()); }
+
 		for (auto it = _entries.begin(); it != _entries.end();)
 		{
 			if (temp.GetVar() == it->GetVar()) 
@@ -66,68 +61,55 @@ void Polynom::AddSuch()
 			else { it++; }
 		}
 
-		result.push_back(temp);
-	}	
+		if (temp.GetCoeff()) { result.push_back(temp); }
+	}
+
+	std::sort(result.begin(), result.end(),
+		[](PolynomEntry & first, PolynomEntry & second) { return first.GetDegree() > second.GetDegree(); });
+
 	this->entries = result;
 }
 
 Polynom Polynom::operator + (const Polynom & other)
 {
 	std::vector<PolynomEntry> ret;
-
 	this->AddSuch();
 
 	for (auto it : this->entries) { ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); }
 	for (auto it : other.entries) { ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); }
 
-	this->AddSuch();
+	Polynom Result(ret);
+	Result.AddSuch();
 
-	std::sort(ret.begin(), ret.end(),
-		[](PolynomEntry & first, PolynomEntry & second) { return first.GetDegree() > second.GetDegree(); });
-
-	Polynom _ret(ret);
-
-	return (_ret); // TODO: Make a good constructor to - (return Polynom(ret));
+	return (Result);
 }
 
 Polynom Polynom::operator - (const Polynom & other)
 {
 	std::vector<PolynomEntry> ret;
-	
 	this->AddSuch();
 
 	for (auto it : this->GetEntries()) { ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar()));  }
 	for (auto it : other.GetEntries()) { ret.push_back(PolynomEntry(-it.GetCoeff(), it.GetVar())); }
 
-	this->AddSuch();
-	
-	std::sort(ret.begin(), ret.end(),
-		[](PolynomEntry & first, PolynomEntry & second) { return first.GetDegree() > second.GetDegree(); });
+	Polynom Result(ret);
+	Result.AddSuch();
 
-	Polynom _ret(ret);
-
-	return (_ret); // TODO: Make a good constructor to - (return Polynom(ret));
+	return (Result); 
 }
 
 Polynom Polynom::operator * (const Polynom & other)
 {
 	std::vector<PolynomEntry> ret;
-
 	this->AddSuch();
 
 	for (auto it : this->entries)
 	{
-		for (auto it_oth : other.entries)
-		{
-			ret.push_back(it * it_oth);
-		}
+		for (auto it_oth : other.entries) { ret.push_back(it * it_oth); }
 	}
-	Polynom _ret(ret);
 
-	_ret.AddSuch();
-	
-	std::sort(ret.begin(), ret.end(),
-		[](PolynomEntry & first, PolynomEntry & second) { return first.GetDegree() > second.GetDegree(); });
+	Polynom Result(ret);
+	Result.AddSuch();
 
-	return _ret;
+	return (Result);
 }

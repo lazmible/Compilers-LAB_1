@@ -10,21 +10,21 @@ class Variable
 private:
 
 	char letter;
-	long int degree;
+	long degree;
 
 public:
 
 	Variable() 
 		: letter('a'), degree(0) {}
-	Variable(char l, long int d)
+	Variable(char l, long d)
 		: letter(l), degree(d) {}
 	~Variable()
 		{}
 
 	const char     GetLetter() const;
-	const long int GetDegree() const;
-	void           SetLetter(char l);
-	void           IncDegree(long int d);
+	const long     GetDegree() const;
+	void           SetLetter(char)  ;
+	void           IncDegree(long)  ;
 
 	bool operator == (const Variable & other) const;
 	bool operator != (const Variable & other) const;

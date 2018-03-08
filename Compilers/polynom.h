@@ -28,7 +28,7 @@ public:
 		{}
 
 	void                            AddSuch  ()       ;
-	const long int                  GetDegree()  const;
+	const long                      GetDegree()  const;
 	const std::vector<PolynomEntry> GetEntries() const;
 
 //	TODO: Polynom operator = (const Polynom &);
