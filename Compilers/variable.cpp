@@ -2,7 +2,7 @@
 
 std::ostream & operator << (std::ostream & stream, const Variable & var)
 {
-	if (var.degree > 1) { stream << var.letter << "^" << var.degree; }
+	if (var.degree != 1) { stream << var.letter << "^" << var.degree; }
 	else if (var.degree == 1) { stream << var.letter; }
 	else if (var.degree == 0) { stream << ""; }
 	// TOOD: Remove shitcode

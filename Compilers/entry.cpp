@@ -29,7 +29,10 @@ void PolynomEntry::AddSuch()
 				flag = true;
 			}
 		}
-		if (flag) { ret_var.push_back(temp); }
+		if (flag) 
+		{
+			ret_var.push_back(temp); 
+		}
 	}
 
 	this->var = ret_var;
@@ -75,7 +78,7 @@ PolynomEntry PolynomEntry::operator * (const PolynomEntry & other) const
 {
 	std::vector<Variable> ret_var_temp;
 	std::vector<Variable> ret_var;
-	long int ret_coeff = this->GetCoeff() * other.GetCoeff();
+	long ret_coeff = this->GetCoeff() * other.GetCoeff();
 
 	for (auto it : this->GetVar()) { ret_var_temp.push_back(it); }
 	for (auto it : other.GetVar()) { ret_var_temp.push_back(it); }

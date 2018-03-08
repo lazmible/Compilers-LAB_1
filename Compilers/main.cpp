@@ -51,20 +51,21 @@ int main()
 
 	// You can build a variable letter from all english alphabet.
 
-	Variable v1('a', 4); // Create a variable x^2
-	Variable v2('a', 4); // Create a variable x^1
-	Variable v3('b', 1); // Create a variable y^2
-	Variable v4('z', 1); // Create a variable z^1
+	Variable v1('a', -1); 
+	Variable v2('b', 2); 
+	Variable v3('c', 3); 
+	Variable v4('c', 3); 
 
-	PolynomEntry e1( 6, { v1 }      ); // Create a monom 5x^2
-	PolynomEntry e2( -5, { v2, v3 } ); // Create a monom -4xy^2
-//	PolynomEntry e3( 7, { v3 }      ); // Create a monom 7y^2
-//	PolynomEntry e4( 2, { v4 }      ); // Create a monom 2z
+	PolynomEntry e1( 6, { v1 } ); 
+	PolynomEntry e2( -5, { v2 }); 
+	PolynomEntry e3(2, { v3 }); 
+//	PolynomEntry e3( 7, { v3 }      ); 
+//	PolynomEntry e4( 2, { v4 }      ); 
 
 	Polynom p1( { e1,e2 } ); // Create a polynom 5x^2 - 4xy^2
-	Polynom p2( { e2 } ); // Create a polynom 7y^2 - 2z
+	Polynom p2( { e3, e1 } ); // Create a polynom 7y^2 - 2z
 
-	std::cout << "Polynom 1: " << p1 << std::endl << "Polynom 2:" << p2 << std::endl;
+	std::cout << "Polynom 1: " << p1 << std::endl << "Polynom 2: " << p2 << std::endl;
 
 	std::cout << "Summary: "        << p1 + p2 << std::endl;
 	std::cout << "Subtraction: "    << p1 - p2 << std::endl;

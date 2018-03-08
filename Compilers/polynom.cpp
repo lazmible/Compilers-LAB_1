@@ -41,7 +41,7 @@ void Polynom::AddSuch()
 {
 	std::vector<PolynomEntry> result;
 	
-	for (auto it : this->GetEntries()) { it.AddSuch(); }
+	for (auto it : this->entries) { it.AddSuch(); }
 
 	std::vector<PolynomEntry> _entries = this->GetEntries();
 
@@ -75,8 +75,16 @@ Polynom Polynom::operator + (const Polynom & other)
 	std::vector<PolynomEntry> ret;
 	this->AddSuch();
 
-	for (auto it : this->entries) { ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); }
-	for (auto it : other.entries) { ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); }
+	for (auto it : this->entries) 
+	{
+		it.AddSuch();
+		ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); 
+	}
+	for (auto it : other.entries) 
+	{
+		it.AddSuch();
+		ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); 
+	}
 
 	Polynom Result(ret);
 	Result.AddSuch();
@@ -89,8 +97,16 @@ Polynom Polynom::operator - (const Polynom & other)
 	std::vector<PolynomEntry> ret;
 	this->AddSuch();
 
-	for (auto it : this->GetEntries()) { ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar()));  }
-	for (auto it : other.GetEntries()) { ret.push_back(PolynomEntry(-it.GetCoeff(), it.GetVar())); }
+	for (auto it : this->GetEntries()) 
+	{
+		it.AddSuch();
+		ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar()));  
+	}
+	for (auto it : other.GetEntries()) 
+	{
+		it.AddSuch();
+		ret.push_back(PolynomEntry(-it.GetCoeff(), it.GetVar())); 
+	}
 
 	Polynom Result(ret);
 	Result.AddSuch();
