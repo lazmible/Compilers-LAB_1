@@ -43,6 +43,12 @@ void PolynomEntry::IncCoeff(long c)
 	this->coeff += c;
 }
 
+void PolynomEntry::Append(Variable var)
+{
+	this->var.push_back(var);
+	this->AddSuch();
+}
+
 bool PolynomEntry::operator == (const PolynomEntry & other) const 
 {
 	return (this->var == other.var && this->GetCoeff() == other.GetCoeff()); 

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
-
 #include "variable.h"
 
 class PolynomEntry
@@ -19,6 +16,8 @@ public:
 		= default;
 	PolynomEntry(long c) 
 		: coeff(c) {}
+	PolynomEntry(Variable v)
+		: coeff(1) { var.push_back(v); }
 	PolynomEntry(long c, Variable v) 
 		: coeff(c) { var.push_back(v); }
 	PolynomEntry(long c, std::vector<Variable> v) 
@@ -26,11 +25,12 @@ public:
 	~PolynomEntry()
 		{}
 
-	const long                   GetCoeff  ()  const;
-	const std::vector<Variable>  GetVar    ()  const;
-	const long                   GetDegree ()  const;
-	void                         AddSuch   ()       ;
-	void                         IncCoeff  (long)   ;
+	const long                   GetCoeff  ()  const  ;
+	const std::vector<Variable>  GetVar    ()  const  ;
+	const long                   GetDegree ()  const  ;
+	void                         AddSuch   ()         ; 
+	void                         IncCoeff  (long)     ;
+	void                         Append    (Variable) ; 
 
 	bool         operator == (const PolynomEntry & other) const;
 	bool         operator != (const PolynomEntry & other) const;

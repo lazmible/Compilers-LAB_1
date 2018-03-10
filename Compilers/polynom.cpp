@@ -70,6 +70,12 @@ void Polynom::AddSuch()
 	this->entries = result;
 }
 
+void Polynom::Append(PolynomEntry pe)
+{
+	this->entries.push_back(pe);
+	this->AddSuch();
+}
+
 Polynom Polynom::operator + (const Polynom & other)
 {
 	std::vector<PolynomEntry> ret;

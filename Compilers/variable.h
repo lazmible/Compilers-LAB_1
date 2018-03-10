@@ -14,8 +14,8 @@ private:
 
 public:
 
-	Variable() 
-		: letter('a'), degree(0) {}
+	Variable()
+		= default;
 	Variable(char l, long d)
 		: letter(l), degree(d) {}
 	~Variable()

@@ -1,46 +1,43 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-extern "C" 
-{
-	#include "y_tab.h"
-	extern int yyparse();
-	extern int yyval;
-}
+#include "y_tab.cpp.h"
+
+extern int yyparse();
+extern YYSTYPE yyval;
 
 #include "polynom.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
+#include <iostream>
+#include <cstdlib>
+#include <cctype>
 
 FILE * yyin;
 
-extern "C"
+
+int yylex()	
 {
-	int yylex()
-	
+	int c = std::fgetc(yyin);
+
+	if (std::isdigit(c)) 
 	{
-		int c = fgetc(yyin);
-
-		if (c == '+')   { return (PLUS);  }
-		if (c == '-')   { return (MINUS); }
-		if (isdigit(c)) 
-		{
-			yylval = c - '0'; 
-			return (DIGIT);
-			//std::string kek = std::string("abc");
-		}
-
-		return (c);	
+		yylval.num = c - '0'; 
+		return (DIGIT);
+	}
+	else if (std::isalpha(c))
+	{
+		yyval.let = c;
+		return (LETTER);
 	}
 
-	int yyerror(char * c)
+	return (c);	
+}
+
+	int yyerror(const char * err)
 	{
-		puts("error");
-		//std::cout << "error" << std::endl;
+		std::cout << "Error: " << err << std::endl;
 		return -1;
 	}
-}
+
 
 int main()
 
@@ -56,11 +53,11 @@ int main()
 	Variable v3('c', 3); 
 	Variable v4('c', 3); 
 
-	PolynomEntry e1( 6, { v1 } ); 
-	PolynomEntry e2( -5, { v2 }); 
-	PolynomEntry e3(2, { v3 }); 
-//	PolynomEntry e3( 7, { v3 }      ); 
-//	PolynomEntry e4( 2, { v4 }      ); 
+	PolynomEntry e1( 6,  { v1 } ); 
+	PolynomEntry e2( -5, { v2 } ); 
+	PolynomEntry e3( 2,  { v3 } ); 
+//	PolynomEntry e3( 7, { v3 } ); 
+//	PolynomEntry e4( 2, { v4 } ); 
 
 	Polynom p1( { e1,e2 } ); // Create a polynom 5x^2 - 4xy^2
 	Polynom p2( { e3, e1 } ); // Create a polynom 7y^2 - 2z

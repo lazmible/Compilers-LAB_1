@@ -5,12 +5,25 @@
 #define YYBISON 1  /* Identify Bison output.  */
 
 #define	DIGIT	258
-#define	PLUS	259
-#define	MINUS	260
+#define	LETTER	259
 
 #line 1 "1.y"
 
-	#define alloca malloc	
+	#include "polynom.h"
+
+	int yyerror (const char * err);
+    int  yylex   ();
+
+
+#line 9 "1.y"
+typedef union	
+{
+	class Variable     *  _var   ;
+	class PolynomEntry *  _pe    ;
+	class Polynom      *  _poly  ;
+	int                 num      ;
+	char                let      ;
+} YYSTYPE;
 
 #ifndef YYLTYPE
 typedef
@@ -28,9 +41,6 @@ typedef
 #define YYLTYPE yyltype
 #endif
 
-#ifndef YYSTYPE
-#define YYSTYPE int
-#endif
 #include <stdio.h>
 
 #ifndef __cplusplus
@@ -41,16 +51,23 @@ typedef
 
 
 
-#define	YYFINAL		12
+#define	YYFINAL		8
 #define	YYFLAG		-32768
-#define	YYNTBASE	6
+#define	YYNTBASE	11
 
-#define YYTRANSLATE(x) ((unsigned)(x) <= 260 ? yytranslate[x] : 9)
+#define YYTRANSLATE(x) ((unsigned)(x) <= 259 ? yytranslate[x] : 13)
 
 static const char yytranslate[] = {     0,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,     5,
+     6,     9,     7,     2,     8,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
+     2,     2,     2,    10,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -66,76 +83,72 @@ static const char yytranslate[] = {     0,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-     2,     2,     2,     2,     2,     1,     2,     3,     4,     5
+     2,     2,     2,     2,     2,     1,     2,     3,     4
 };
 
 #if YYDEBUG != 0
 static const short yyprhs[] = {     0,
-     0,     4,     8,    10,    13,    15
+     0,     4,     8,    12,    16,    18,    19,    21,    24,    27,
+    31,    34,    35,    37,    41,    43
 };
 
-static const short yyrhs[] = {     7,
-     8,     7,     0,     6,     8,     7,     0,     3,     0,     7,
-     3,     0,     4,     0,     5,     0
+static const short yyrhs[] = {     5,
+     0,     6,     0,     0,     7,     0,     0,     0,     8,     0,
+     0,     0,     9,     0,     0,     0,     0,     0,    11,     0,
+    12,    11,     0,     8,    11,     0,     8,    12,    11,     0,
+     0,    11,     0,     0,     4,     0,     4,    10,    12,     0,
+     3,     0,    12,     3,     0
 };
 
 #endif
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-     8,     9,    11,    12,    14,    15
+    31,    33,    34,    35,    36,    37,    39,    41,    42,    43,
+    44,    45,    47,    49,    52,    54
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","DIGIT",
-"PLUS","MINUS","str","number","sign",""
+"LETTER","'('","')'","'+'","'-'","'*'","'^'","variable","number","variable"
 };
 #endif
 
 static const short yyr1[] = {     0,
-     6,     6,     7,     7,     8,     8
+    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
+    -1,    -1,    11,    11,    12,    12
 };
 
 static const short yyr2[] = {     0,
-     3,     3,     1,     2,     1,     1
+     3,     3,     3,     3,     1,     0,     1,     2,     2,     3,
+     2,     0,     1,     3,     1,     2
 };
 
 static const short yydefact[] = {     0,
-     3,     0,     0,     5,     6,     0,     4,     0,     2,     1,
-     0,     0
+    13,     0,    15,    14,    16,     0,     0,     0
 };
 
-static const short yydefgoto[] = {     2,
-     3,     6
+static const short yydefgoto[] = {     6,
+     4
 };
 
-static const short yypact[] = {     3,
--32768,     0,    -2,-32768,-32768,     3,-32768,     3,     5,     5,
-    10,-32768
+static const short yypact[] = {    -4,
+    -9,    -1,-32768,     0,-32768,     4,     5,-32768
 };
 
 static const short yypgoto[] = {-32768,
-     1,     8
+-32768
 };
 
 
-#define	YYLAST		11
+#define	YYLAST		5
 
 
-static const short yytable[] = {    11,
-     7,     4,     5,     4,     5,     1,     9,     7,    10,    12,
-     8
+static const short yytable[] = {     1,
+     2,     3,     5,     7,     8
 };
 
-static const short yycheck[] = {     0,
-     3,     4,     5,     4,     5,     3,     6,     3,     8,     0,
-     3
+static const short yycheck[] = {     4,
+    10,     3,     3,     0,     0
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
 #line 3 "bison.simple"
@@ -630,28 +643,60 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 8 "1.y"
-{ yyval = yyvsp[-2] + yyvsp[-1]*yyvsp[0]; ;
+#line 33 "1.y"
+{ (*yyval._poly) = (*yyvsp[-1]._poly);                     ;
     break;}
 case 2:
-#line 9 "1.y"
-{ yyval = yyvsp[-2] + yyvsp[-1]*yyvsp[0]; printf("%d\n", yyval); ;
+#line 34 "1.y"
+{ (*yyval._poly) = (*yyvsp[-2]._poly) + (*yyvsp[0]._poly);             ;
     break;}
 case 3:
-#line 11 "1.y"
-{ yyval = yyvsp[0] ;
+#line 35 "1.y"
+{ (*yyval._poly) = (*yyvsp[-2]._poly) - (*yyvsp[0]._poly);             ;
     break;}
 case 4:
-#line 12 "1.y"
-{ yyval = yyvsp[-1] * 10 + yyvsp[0]; ;
+#line 36 "1.y"
+{ (*yyval._poly) = (*yyvsp[-2]._poly) * (*yyvsp[0]._poly);             ;
     break;}
 case 5:
-#line 14 "1.y"
-{ yyval = 1;  ;
+#line 37 "1.y"
+{ yyval._poly = new Polynom(*yyvsp[0]._pe);             ;
     break;}
-case 6:
-#line 15 "1.y"
-{ yyval = -1; ;
+case 7:
+#line 41 "1.y"
+{ yyval._pe = new PolynomEntry((*yyvsp[0]._var));      ;
+    break;}
+case 8:
+#line 42 "1.y"
+{ yyval._pe = new PolynomEntry(yyvsp[-1].num, (*yyvsp[0]._var));  ;
+    break;}
+case 9:
+#line 43 "1.y"
+{ yyval._pe = new PolynomEntry(-1, (*yyvsp[0]._var));  ;
+    break;}
+case 10:
+#line 44 "1.y"
+{ yyval._pe = new PolynomEntry(yyvsp[-1].num, (*yyvsp[0]._var));  ;
+    break;}
+case 11:
+#line 45 "1.y"
+{ yyval._pe->Append(*yyvsp[0]._var);                   ;
+    break;}
+case 13:
+#line 49 "1.y"
+{ yyval._var = new Variable(yyvsp[0].let, 1);          ;
+    break;}
+case 14:
+#line 50 "1.y"
+{ yyval._var = new Variable(yyvsp[-2].let, yyvsp[0].num);         ;
+    break;}
+case 15:
+#line 54 "1.y"
+{ yyval.num = yyvsp[0].num;                           ;
+    break;}
+case 16:
+#line 55 "1.y"
+{ yyval.num = yyvsp[-1].num * 10 + yyvsp[0].num;                 ;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
@@ -851,4 +896,4 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 16 "1.y"
+#line 55 "1.y"

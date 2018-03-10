@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
 #include <algorithm>
 
 #include "variable.h"
@@ -23,15 +21,16 @@ public:
 	Polynom(const std::vector<PolynomEntry> & other)
 		: entries(other) {}
 	Polynom(const PolynomEntry & other)
-	{ entries.push_back(other); }
+		{ entries.push_back(other); }
 	~Polynom() 
 		{}
 
-	void                            AddSuch  ()       ;
-	const long                      GetDegree()  const;
-	const std::vector<PolynomEntry> GetEntries() const;
+	void                            AddSuch  ()          ;
+	const long                      GetDegree()  const   ;
+	const std::vector<PolynomEntry> GetEntries() const   ;
+	void                            Append(PolynomEntry) ;
 
-//	TODO: Polynom operator = (const Polynom &);
+//  TODO: Polynom operator = (const Polynom &);
 	Polynom operator + (const Polynom &);
 	Polynom operator - (const Polynom &);
 	Polynom operator * (const Polynom &);

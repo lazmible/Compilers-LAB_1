@@ -119,12 +119,13 @@
     <ClCompile Include="polynom.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="variable.cpp" />
-    <ClCompile Include="y_tab.c" />
+    <ClCompile Include="y_tab.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entry.h" />
     <ClInclude Include="polynom.h" />
     <ClInclude Include="variable.h" />
+    <ClInclude Include="y_tab.cpp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
