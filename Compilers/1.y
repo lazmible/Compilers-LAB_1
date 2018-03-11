@@ -1,7 +1,7 @@
 %{
 	#include "polynom.h"
 
-	int  yyerror (const char * err);
+    int  yyerror (const char * err);
     int  yylex   ();
 %}
 

@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="entry.h" />
+    <ClInclude Include="Identifier.h" />
     <ClInclude Include="polynom.h" />
     <ClInclude Include="variable.h" />
     <ClInclude Include="y_tab.cpp.h" />

@@ -1,10 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "y_tab.cpp.h"
-
-extern int yyparse();
-extern YYSTYPE yyval;
-
 #include "polynom.h"
 
 #include <iostream>
@@ -13,6 +9,8 @@ extern YYSTYPE yyval;
 
 FILE * yyin;
 
+extern int yyparse();
+extern YYSTYPE yyval;
 
 int yylex()	
 {
@@ -32,18 +30,19 @@ int yylex()
 	return (c);	
 }
 
-	int yyerror(const char * err)
-	{
-		std::cout << "Error: " << err << std::endl;
-		return -1;
-	}
+int yyerror(const char * err)
+{
+	std::cout << "Error: " << err << std::endl;
+	return -1;
+}
 
 
 int main()
 
 {
 	//yyin = fopen("my.txt", "r");
-	//yyparse();
+	yyin = stdin;
+	yyparse();
 	//printf("\n");
 
 	// You can build a variable letter from all english alphabet.

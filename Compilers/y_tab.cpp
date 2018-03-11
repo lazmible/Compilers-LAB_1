@@ -11,11 +11,10 @@
 
 	#include "polynom.h"
 
-	int yyerror (const char * err);
+    int  yyerror (const char * err);
     int  yylex   ();
 
-
-#line 9 "1.y"
+#line 8 "1.y"
 typedef union	
 {
 	class Variable     *  _var   ;
@@ -104,8 +103,8 @@ static const short yyrhs[] = {     5,
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    31,    33,    34,    35,    36,    37,    39,    41,    42,    43,
-    44,    45,    47,    49,    52,    54
+    30,    32,    33,    34,    35,    36,    38,    40,    41,    42,
+    43,    44,    46,    48,    51,    53
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","DIGIT",
@@ -643,59 +642,59 @@ yyreduce:
   switch (yyn) {
 
 case 1:
-#line 33 "1.y"
+#line 32 "1.y"
 { (*yyval._poly) = (*yyvsp[-1]._poly);                     ;
     break;}
 case 2:
-#line 34 "1.y"
+#line 33 "1.y"
 { (*yyval._poly) = (*yyvsp[-2]._poly) + (*yyvsp[0]._poly);             ;
     break;}
 case 3:
-#line 35 "1.y"
+#line 34 "1.y"
 { (*yyval._poly) = (*yyvsp[-2]._poly) - (*yyvsp[0]._poly);             ;
     break;}
 case 4:
-#line 36 "1.y"
+#line 35 "1.y"
 { (*yyval._poly) = (*yyvsp[-2]._poly) * (*yyvsp[0]._poly);             ;
     break;}
 case 5:
-#line 37 "1.y"
+#line 36 "1.y"
 { yyval._poly = new Polynom(*yyvsp[0]._pe);             ;
     break;}
 case 7:
-#line 41 "1.y"
+#line 40 "1.y"
 { yyval._pe = new PolynomEntry((*yyvsp[0]._var));      ;
     break;}
 case 8:
-#line 42 "1.y"
+#line 41 "1.y"
 { yyval._pe = new PolynomEntry(yyvsp[-1].num, (*yyvsp[0]._var));  ;
     break;}
 case 9:
-#line 43 "1.y"
+#line 42 "1.y"
 { yyval._pe = new PolynomEntry(-1, (*yyvsp[0]._var));  ;
     break;}
 case 10:
-#line 44 "1.y"
+#line 43 "1.y"
 { yyval._pe = new PolynomEntry(yyvsp[-1].num, (*yyvsp[0]._var));  ;
     break;}
 case 11:
-#line 45 "1.y"
+#line 44 "1.y"
 { yyval._pe->Append(*yyvsp[0]._var);                   ;
     break;}
 case 13:
-#line 49 "1.y"
+#line 48 "1.y"
 { yyval._var = new Variable(yyvsp[0].let, 1);          ;
     break;}
 case 14:
-#line 50 "1.y"
+#line 49 "1.y"
 { yyval._var = new Variable(yyvsp[-2].let, yyvsp[0].num);         ;
     break;}
 case 15:
-#line 54 "1.y"
+#line 53 "1.y"
 { yyval.num = yyvsp[0].num;                           ;
     break;}
 case 16:
-#line 55 "1.y"
+#line 54 "1.y"
 { yyval.num = yyvsp[-1].num * 10 + yyvsp[0].num;                 ;
     break;}
 }
@@ -896,4 +895,4 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 55 "1.y"
+#line 54 "1.y"
