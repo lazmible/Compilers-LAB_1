@@ -10,8 +10,9 @@
 	class Variable     *  _var   ;
 	class PolynomEntry *  _pe    ;
 	class Polynom      *  _poly  ;
-	int                 num      ;
-	char                let      ;
+	int                   num    ;
+	char                  let    ;
+	char               *  str    ;
 }
 
 %type <_poly> polynom
@@ -21,11 +22,25 @@
 %type <num>   DIGIT
 %type <let>   LETTER
 
-%token DIGIT LETTER
+%token <str>  PRINT 
+%token        DIGIT LETTER
 
-%start variable
+%start source
 
 %%
+
+source:
+                       |
+         source   '\n' |
+		 source   '\r' |
+		 source        |
+		 source begin  |
+
+begin:
+    
+         PRINT polynom        { std::cout << *($2) << std::endl; }       |
+		 PRINT polynom  '\n'  { std::cout << *($2) << std::endl; }       |
+
 
 polynom:
 
@@ -33,7 +48,7 @@ polynom:
 	polynom '+' polynom     { (*$$) = (*$1) + (*$3);             } |
 	polynom '-' polynom     { (*$$) = (*$1) - (*$3);             } |
 	polynom '*' polynom     { (*$$) = (*$1) * (*$3);             } |
-	polynom_entry           { $$ = new Polynom(*$1);             } |
+	polynom_entry           { $$ = new Polynom(*$1);             } 
 
 polynom_entry:
 
@@ -41,7 +56,7 @@ polynom_entry:
 	number variable         { $$ = new PolynomEntry($1, (*$2));  } |
 	'-' variable            { $$ = new PolynomEntry(-1, (*$2));  } |
 	'-' number variable     { $$ = new PolynomEntry($2, (*$3));  } |
-	polynom_entry variable  { $$->Append(*$2);                   } |
+	polynom_entry variable  { $$->Append(*$2);                   } 
 
 variable: 
 
@@ -52,3 +67,5 @@ number:
 	
 	DIGIT                   { $$ = $1;                           } |
 	number DIGIT            { $$ = $1 * 10 + $2;                 }
+
+%%

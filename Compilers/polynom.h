@@ -25,10 +25,10 @@ public:
 	~Polynom() 
 		{}
 
-	void                            AddSuch  ()          ;
-	const long                      GetDegree()  const   ;
-	const std::vector<PolynomEntry> GetEntries() const   ;
-	void                            Append(PolynomEntry) ;
+	void                            AddSuch   ()          ;
+	const long                      GetDegree ()  const   ;
+	const std::vector<PolynomEntry> GetEntries()  const   ;
+	void                            Append(PolynomEntry)  ;
 
 //  TODO: Polynom operator = (const Polynom &);
 	Polynom operator + (const Polynom &);
