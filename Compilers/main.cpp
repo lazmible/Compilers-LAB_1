@@ -5,13 +5,17 @@
 #include <cstdlib>
 #include <cctype>
 
+#pragma warning ( disable:4996 )
+
 FILE * yyin;
 
 extern int yyparse();
+int c;
 
 int yylex()	
 {
-	int c = std::fgetc(yyin);
+
+	while ((c = std::fgetc(yyin)) == ' ' || c == '\t' || c == '\n');
 
 	if (std::isdigit(c)) 
 	{
@@ -20,7 +24,9 @@ int yylex()
 	}
 	else if (std::isalpha(c))
 	{
-		static std::string buf;
+		std::string buf;
+		buf += c;
+		char temp;
 		do
 		{
 			c = std::fgetc(yyin);
@@ -29,12 +35,10 @@ int yylex()
 		while (std::isalnum(c));
 
 		std::ungetc(c, yyin);
-		if (buf == "print") 
-		{
-			yylval.str = (char *)buf.c_str();
-			return (PRINT);
-		}
-		yylval.let = c;
+		buf.erase(--buf.end());
+
+		if (buf == "print") { return (PRINT); }
+		yylval.let = *buf.begin();
 		return (LETTER);
 	}
 
@@ -51,8 +55,7 @@ int yyerror(const char * err)
 int main()
 
 {
-	yyin = /*fopen("my.txt", "r");*/ stdin;
-	yyin = stdin;
+	yyin = fopen("input.txt", "r");
 	yyparse();
 	
 	system("pause");

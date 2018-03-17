@@ -30,10 +30,15 @@ public:
 	const std::vector<PolynomEntry> GetEntries()  const   ;
 	void                            Append(PolynomEntry)  ;
 
-//  TODO: Polynom operator = (const Polynom &);
-	Polynom operator + (const Polynom &);
-	Polynom operator - (const Polynom &);
-	Polynom operator * (const Polynom &);
+	Polynom operator =  (const Polynom &);
+	Polynom operator +  (const Polynom &);
+	Polynom operator -  (const Polynom &);
+	Polynom operator *  (const Polynom &);
+	Polynom operator ^  (const long)     ;
+	Polynom operator += (const Polynom &);
+	Polynom operator -= (const Polynom &);
+	Polynom operator *= (const Polynom &);
+	Polynom operator ^= (const Polynom &);
 //  TODO: Polynom operator / (const Polynom &);
 
 	friend std::ostream & operator << (std::ostream & stream, const Polynom & poly);

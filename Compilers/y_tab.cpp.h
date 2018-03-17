@@ -10,6 +10,7 @@ typedef union
 #define	DIGIT	258
 #define	LETTER	259
 #define	PRINT	260
+#define	UMINUS	261
 
 
 extern YYSTYPE yylval;

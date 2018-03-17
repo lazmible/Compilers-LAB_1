@@ -78,16 +78,24 @@ void Polynom::Append(PolynomEntry pe)
 
 Polynom Polynom::operator + (const Polynom & other)
 {
+	this->entries = other.entries;
+	return (*this);
+}
+
+Polynom Polynom::operator + (const Polynom & other)
+{
 	std::vector<PolynomEntry> ret;
 	this->AddSuch();
 
 	for (auto it : this->entries) 
 	{
 		it.AddSuch();
-		ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); 
+		ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar()));
 	}
+
 	for (auto it : other.entries) 
 	{
+		std::cout << it << std::endl;
 		it.AddSuch();
 		ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); 
 	}
@@ -96,6 +104,12 @@ Polynom Polynom::operator + (const Polynom & other)
 	Result.AddSuch();
 
 	return (Result);
+}
+
+Polynom Polynom::operator += (const Polynom & other)
+{
+	(*this) = (*this) + other;
+	return (*this);
 }
 
 Polynom Polynom::operator - (const Polynom & other)
@@ -120,6 +134,12 @@ Polynom Polynom::operator - (const Polynom & other)
 	return (Result); 
 }
 
+Polynom Polynom::operator -= (const Polynom & other)
+{
+	(*this) = (*this) - other;
+	return (*this);
+}
+
 Polynom Polynom::operator * (const Polynom & other)
 {
 	std::vector<PolynomEntry> ret;
@@ -133,5 +153,21 @@ Polynom Polynom::operator * (const Polynom & other)
 	Polynom Result(ret);
 	Result.AddSuch();
 
+	return (Result);
+}
+
+Polynom Polynom::operator *= (const Polynom & other)
+{
+	(*this) = (*this) * other;
+	return (*this);
+}
+
+Polynom Polynom::operator ^ (const long degree)
+{
+	Polynom Result(*this);
+	for (long i = 0; i < degree; i++)
+	{
+		Result *= Result;
+	}
 	return (Result);
 }

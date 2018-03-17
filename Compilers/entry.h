@@ -12,8 +12,8 @@ private:
 
 public:
 
-	PolynomEntry() 
-		= default;
+	PolynomEntry()
+		{}
 	PolynomEntry(long c) 
 		: coeff(c) {}
 	PolynomEntry(Variable v)

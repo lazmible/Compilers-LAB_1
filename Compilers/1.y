@@ -15,6 +15,7 @@
 	char               *  str    ;
 }
 
+
 %type <_poly> polynom
 %type <_pe>   polynom_entry
 %type <_var>  variable
@@ -25,22 +26,25 @@
 %token <str>  PRINT 
 %token        DIGIT LETTER
 
+%left '+' '-'
+%left '*'
+%right UMINUS
+
+%right '^'
+
 %start source
 
 %%
 
 source:
-                       |
-         source   '\n' |
-		 source   '\r' |
-		 source        |
-		 source begin  |
+                  |
+    source   '\n' |
+	source   '\r' |
+	source begin  
 
 begin:
     
-         PRINT polynom        { std::cout << *($2) << std::endl; }       |
-		 PRINT polynom  '\n'  { std::cout << *($2) << std::endl; }       |
-
+	PRINT polynom  ';'  { std::cout << *($2) << std::endl; } 
 
 polynom:
 
@@ -50,22 +54,28 @@ polynom:
 	polynom '*' polynom     { (*$$) = (*$1) * (*$3);             } |
 	polynom_entry           { $$ = new Polynom(*$1);             } 
 
+	;
+
 polynom_entry:
 
 	variable                { $$ = new PolynomEntry((*$1));      } |
 	number variable         { $$ = new PolynomEntry($1, (*$2));  } |
-	'-' variable            { $$ = new PolynomEntry(-1, (*$2));  } |
-	'-' number variable     { $$ = new PolynomEntry($2, (*$3));  } |
-	polynom_entry variable  { $$->Append(*$2);                   } 
+	number                  { $$ = new PolynomEntry($1);  }
+
+	;
 
 variable: 
 
 	LETTER                  { $$ = new Variable($1, 1);          } |
 	LETTER '^' number       { $$ = new Variable($1, $3);         }
 
+	;
+
 number: 
 	
 	DIGIT                   { $$ = $1;                           } |
 	number DIGIT            { $$ = $1 * 10 + $2;                 }
+
+	;
 
 %%
