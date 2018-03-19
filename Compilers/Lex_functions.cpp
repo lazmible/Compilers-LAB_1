@@ -11,22 +11,31 @@
 
 typedef char INPUT_TYPE;
 
-INPUT_TYPE       CurrentSymbol;
-extern FILE    * yyin;
-
-std::map<std::string, Polynom> IdentifiersDatabase;
-std::vector<std::string> GlobalBuffers;
-
-std::string GlobalBuf;
+INPUT_TYPE                       CurrentSymbol;
+extern FILE                    * yyin;
+std::size_t                      Lines = 1;
+std::map<std::string, Polynom>   IdentifiersDatabase;
+std::vector<std::string>         GlobalBuffers;
 
 void SkipGarbage()
 {
 	while 
-	(
+    (
 	   (CurrentSymbol = std::fgetc(yyin)) == ' ' ||
-		CurrentSymbol == '\t'                    ||
-		CurrentSymbol == '\n'
-	);
+	    CurrentSymbol == '\t'                    ||
+	    CurrentSymbol == '\n'
+    );
+
+	{
+		if (CurrentSymbol == '\n') { Lines++; }
+	}
+}
+
+void SkipComment()
+{
+	while ((CurrentSymbol = std::fgetc(yyin)) != '\n');
+	SkipGarbage();
+	Lines++;
 }
 
 int FoundToken(int signature, INPUT_TYPE symb)
@@ -36,6 +45,7 @@ int FoundToken(int signature, INPUT_TYPE symb)
 		case (DIGIT)      : { yylval.num = symb - '0';                       break; }
 		case (LETTER)     : { yylval.let = symb;                             break; }
 		case (IDENTIFIER) : { yylval.str = (--GlobalBuffers.end())->c_str(); break; }
+		case (DECLARATION): { yylval.str = (--GlobalBuffers.end())->c_str(); break; }
 	}
 	return (signature);
 }
@@ -70,7 +80,7 @@ void ReturnLettersToSTDIN(std::string & buf)
 
 int yyerror(const char * err)
 {
-	std::cout << err << std::endl;
+	std::cout << err << /*" on line: " << Lines <<*/ std::endl;
 	return -1;
 }
 
@@ -80,8 +90,13 @@ int yylex()
 	std::string buf;
 	if (std::isdigit(CurrentSymbol)) { return FoundToken(DIGIT, CurrentSymbol); }
 
-	else if (std::isalpha(CurrentSymbol) || CurrentSymbol == '$')
+	else if (std::isalpha(CurrentSymbol) || CurrentSymbol == '$' || CurrentSymbol == '#')
 	{
+		if (CurrentSymbol == '#') 
+		{
+			while (CurrentSymbol == '#') { SkipComment(); }
+		}
+
 		ReadAllLettersAfterCurrentSymbol(buf);
 
 		if (buf == "print") { return FoundToken(PRINT, NULL); }
@@ -91,6 +106,7 @@ int yylex()
 			buf.erase(buf.begin());
 			if (AddIdentifierInDatabase(buf.c_str())) 
 			{
+				GlobalBuffers.push_back(buf);
 				return FoundToken(DECLARATION, NULL); 
 			}
 			else { return Error("Redeclaration");        }

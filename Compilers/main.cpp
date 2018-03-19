@@ -17,7 +17,10 @@ extern std::vector<std::string> GlobalBuffers;
 
 int main()
 {
-	GlobalBuffers.reserve(100000);
+	GlobalBuffers.reserve(1000000);
+	yyin = fopen(FILENAME, "a");
+	fprintf(yyin,"\n");
+	fclose(yyin);
 	yyin = fopen(FILENAME, "r");
 	yyparse();
 	

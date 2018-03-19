@@ -7,7 +7,11 @@ const std::string alphabet =
 
 std::ostream & operator << (std::ostream & stream, const PolynomEntry & entry)
 {
-	if (entry.coeff != 1 && entry.coeff != -1) { stream << std::abs(entry.coeff); }
+	if (!entry.var.empty())
+	{
+		if (entry.coeff != 1 && entry.coeff != -1) { stream << std::abs(entry.coeff); }
+	}
+	else { stream << std::abs(entry.coeff); }
 	for (auto it : entry.var) { stream << it; }
 	return (stream);
 }

@@ -47,7 +47,8 @@ begin:
     
 	PRINT polynom ';'           { std::cout << *($2) << std::endl;   } |
 	IDENTIFIER '=' polynom ';'  { AssignIdentifier($1, (*$3));       } |
-	DECLARATION ';'             {}
+	DECLARATION ';'             { } |
+	DECLARATION '=' polynom ';' { AssignIdentifier($1, (*$3));       } 
 
 polynom:
 
@@ -55,7 +56,6 @@ polynom:
 	polynom '+' polynom            { (*$$) = (*$1) + (*$3);                     } |
 	polynom '-' polynom            { (*$$) = (*$1) - (*$3);                     } |
 	polynom '*' polynom            { (*$$) = (*$1) * (*$3);                     } |
-	polynom '*''*' number          { (*$$) = (*$$) ^ ($4);                      } |
     IDENTIFIER                     { $$ = new Polynom(); (*$$) = GetPolynom($1) } |
 	polynom_entry                  { $$ = new Polynom(*$1);                     } 
 	;
