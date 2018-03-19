@@ -1,5 +1,6 @@
 %{
 	#include "polynom.h"
+	#include "identifiers.h"
 
     int  yyerror (const char * err);
     int  yylex   ();
@@ -23,13 +24,13 @@
 %type <num>   DIGIT
 %type <let>   LETTER
 
-%token <str>  PRINT 
-%token        DIGIT LETTER
+%token <str>  PRINT IDENTIFIER DECLARATION
+%token        DIGIT LETTER 
 
 %left '+' '-'
 %left '*'
-%right UMINUS
 
+%right UMINUS
 %right '^'
 
 %start source
@@ -44,7 +45,10 @@ source:
 
 begin:
     
-	PRINT polynom  ';'  { std::cout << *($2) << std::endl; } 
+	PRINT polynom    ';'       { std::cout << *($2) << std::endl;  } |
+	PRINT IDENTIFIER ';'       { PrintIdentifier($2);              } |
+	IDENTIFIER '=' polynom ';' { AssignIdentifier($1, (*$3));      } |
+	DECLARATION ';' {}
 
 polynom:
 
@@ -52,30 +56,27 @@ polynom:
 	polynom '+' polynom     { (*$$) = (*$1) + (*$3);             } |
 	polynom '-' polynom     { (*$$) = (*$1) - (*$3);             } |
 	polynom '*' polynom     { (*$$) = (*$1) * (*$3);             } |
+	//polynom '^' number      { (*$$) = (*$$) ^ (*$3);             } |
 	polynom_entry           { $$ = new Polynom(*$1);             } 
-
 	;
 
 polynom_entry:
 
-	variable                { $$ = new PolynomEntry((*$1));      } |
-	number variable         { $$ = new PolynomEntry($1, (*$2));  } |
-	number                  { $$ = new PolynomEntry($1);  }
-
+	variable                { $$ = new PolynomEntry((*$1));     } |
+	polynom_entry variable  { $$->Append(*$2);                  } |
+	number                  { $$ = new PolynomEntry($1);  } 
 	;
 
 variable: 
 
-	LETTER                  { $$ = new Variable($1, 1);          } |
-	LETTER '^' number       { $$ = new Variable($1, $3);         }
-
+	LETTER                      { $$ = new Variable($1, 1);  } |
+	LETTER '^' number           { $$ = new Variable($1, $3); } 
 	;
 
 number: 
 	
 	DIGIT                   { $$ = $1;                           } |
 	number DIGIT            { $$ = $1 * 10 + $2;                 }
-
 	;
 
 %%

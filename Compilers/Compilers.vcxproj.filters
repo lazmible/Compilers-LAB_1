@@ -27,7 +27,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Lex_functions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="y_tab.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="identifiers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,10 +47,13 @@
     <ClInclude Include="entry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Identifier.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="y_tab.cpp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Identifier.h">
+    <ClInclude Include="identifiers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

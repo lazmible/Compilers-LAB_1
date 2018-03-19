@@ -35,6 +35,9 @@ void PolynomEntry::AddSuch()
 		}
 	}
 
+	std::sort(ret_var.begin(), ret_var.end(),
+		[](Variable & first, Variable & second) { return first.GetDegree() > second.GetDegree(); });
+
 	this->var = ret_var;
 }
 

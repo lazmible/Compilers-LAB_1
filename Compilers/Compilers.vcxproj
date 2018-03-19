@@ -94,6 +94,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -116,6 +117,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="entry.cpp" />
+    <ClCompile Include="identifiers.cpp" />
+    <ClCompile Include="Lex_functions.cpp" />
     <ClCompile Include="polynom.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="variable.cpp" />
@@ -124,6 +127,7 @@
   <ItemGroup>
     <ClInclude Include="entry.h" />
     <ClInclude Include="Identifier.h" />
+    <ClInclude Include="identifiers.h" />
     <ClInclude Include="polynom.h" />
     <ClInclude Include="variable.h" />
     <ClInclude Include="y_tab.cpp.h" />

@@ -76,7 +76,7 @@ void Polynom::Append(PolynomEntry pe)
 	this->AddSuch();
 }
 
-Polynom Polynom::operator + (const Polynom & other)
+Polynom Polynom::operator = (const Polynom & other)
 {
 	this->entries = other.entries;
 	return (*this);
@@ -95,7 +95,6 @@ Polynom Polynom::operator + (const Polynom & other)
 
 	for (auto it : other.entries) 
 	{
-		std::cout << it << std::endl;
 		it.AddSuch();
 		ret.push_back(PolynomEntry(it.GetCoeff(), it.GetVar())); 
 	}
@@ -149,6 +148,8 @@ Polynom Polynom::operator * (const Polynom & other)
 	{
 		for (auto it_oth : other.entries) { ret.push_back(it * it_oth); }
 	}
+
+	for (auto it : ret) { it.AddSuch(); }
 
 	Polynom Result(ret);
 	Result.AddSuch();

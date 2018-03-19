@@ -1,2 +1,5 @@
-print (x^2 + 1)^2;
-print y^2;
+$kek;
+$lel;
+kek = 2x + 2;
+lel = 2;
+print kek;
