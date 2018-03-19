@@ -1,5 +1,6 @@
 $kek;
 $lel;
-kek = 2x + 2;
-lel = 2;
-print kek;
+kek = 2;
+lel = y;
+lel = lel * kek * 2z;
+print lel;

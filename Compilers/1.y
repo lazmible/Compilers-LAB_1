@@ -13,7 +13,7 @@
 	class Polynom      *  _poly  ;
 	int                   num    ;
 	char                  let    ;
-	char               *  str    ;
+	const char         *  str    ;
 }
 
 
@@ -45,19 +45,19 @@ source:
 
 begin:
     
-	PRINT polynom    ';'       { std::cout << *($2) << std::endl;  } |
-	PRINT IDENTIFIER ';'       { PrintIdentifier($2);              } |
-	IDENTIFIER '=' polynom ';' { AssignIdentifier($1, (*$3));      } |
-	DECLARATION ';' {}
+	PRINT polynom ';'           { std::cout << *($2) << std::endl;   } |
+	IDENTIFIER '=' polynom ';'  { AssignIdentifier($1, (*$3));       } |
+	DECLARATION ';'             {}
 
 polynom:
 
-	'('polynom')'           { (*$$) = (*$2);                     } |
-	polynom '+' polynom     { (*$$) = (*$1) + (*$3);             } |
-	polynom '-' polynom     { (*$$) = (*$1) - (*$3);             } |
-	polynom '*' polynom     { (*$$) = (*$1) * (*$3);             } |
-	//polynom '^' number      { (*$$) = (*$$) ^ (*$3);             } |
-	polynom_entry           { $$ = new Polynom(*$1);             } 
+	'('polynom')'                  { ($$) = ($2);                               } |
+	polynom '+' polynom            { (*$$) = (*$1) + (*$3);                     } |
+	polynom '-' polynom            { (*$$) = (*$1) - (*$3);                     } |
+	polynom '*' polynom            { (*$$) = (*$1) * (*$3);                     } |
+	polynom '*''*' number          { (*$$) = (*$$) ^ ($4);                      } |
+    IDENTIFIER                     { $$ = new Polynom(); (*$$) = GetPolynom($1) } |
+	polynom_entry                  { $$ = new Polynom(*$1);                     } 
 	;
 
 polynom_entry:

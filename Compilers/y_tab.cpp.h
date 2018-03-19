@@ -5,7 +5,7 @@ typedef union
 	class Polynom      *  _poly  ;
 	int                   num    ;
 	char                  let    ;
-	char               *  str    ;
+	const char         *  str    ;
 } YYSTYPE;
 #define	DIGIT	258
 #define	LETTER	259

@@ -27,7 +27,7 @@ typedef union
 	class Polynom      *  _poly  ;
 	int                   num    ;
 	char                  let    ;
-	char               *  str    ;
+	const char         *  str    ;
 } YYSTYPE;
 
 #ifndef YYLTYPE
@@ -56,7 +56,7 @@ typedef
 
 
 
-#define	YYFINAL		35
+#define	YYFINAL		36
 #define	YYFLAG		-32768
 #define	YYNTBASE	19
 
@@ -94,26 +94,28 @@ static const char yytranslate[] = {     0,
 
 #if YYDEBUG != 0
 static const short yyprhs[] = {     0,
-     0,     1,     4,     7,    10,    14,    18,    23,    26,    30,
-    34,    38,    42,    44,    46,    49,    51,    53,    57,    59
+     0,     1,     4,     7,    10,    14,    19,    22,    26,    30,
+    34,    38,    43,    45,    47,    49,    52,    54,    56,    60,
+    62
 };
 
 static const short yyrhs[] = {    -1,
     19,    13,     0,    19,    14,     0,    19,    20,     0,     5,
-    21,    15,     0,     5,     6,    15,     0,     6,    16,    21,
-    15,     0,     7,    15,     0,    17,    21,    18,     0,    21,
-     8,    21,     0,    21,     9,    21,     0,    21,    10,    21,
-     0,    22,     0,    23,     0,    22,    23,     0,    24,     0,
-     4,     0,     4,    12,    24,     0,     3,     0,    24,     3,
-     0
+    21,    15,     0,     6,    16,    21,    15,     0,     7,    15,
+     0,    17,    21,    18,     0,    21,     8,    21,     0,    21,
+     9,    21,     0,    21,    10,    21,     0,    21,    10,    10,
+    24,     0,     6,     0,    22,     0,    23,     0,    22,    23,
+     0,    24,     0,     4,     0,     4,    12,    24,     0,     3,
+     0,    24,     3,     0
 };
 
 #endif
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    40,    41,    42,    43,    46,    48,    49,    50,    53,    55,
-    56,    57,    58,    63,    65,    66,    70,    72,    76,    78
+    40,    41,    42,    43,    46,    48,    49,    52,    54,    55,
+    56,    57,    58,    59,    63,    65,    66,    70,    72,    76,
+    78
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","DIGIT",
@@ -124,20 +126,22 @@ static const char * const yytname[] = {   "$","error","$undefined.","DIGIT",
 #endif
 
 static const short yyr1[] = {     0,
-    19,    19,    19,    19,    20,    20,    20,    20,    21,    21,
-    21,    21,    21,    22,    22,    22,    23,    23,    24,    24
+    19,    19,    19,    19,    20,    20,    20,    21,    21,    21,
+    21,    21,    21,    21,    22,    22,    22,    23,    23,    24,
+    24
 };
 
 static const short yyr2[] = {     0,
-     0,     2,     2,     2,     3,     3,     4,     2,     3,     3,
-     3,     3,     1,     1,     2,     1,     1,     3,     1,     2
+     0,     2,     2,     2,     3,     4,     2,     3,     3,     3,
+     3,     4,     1,     1,     1,     2,     1,     1,     3,     1,
+     2
 };
 
 static const short yydefact[] = {     1,
-     0,     0,     0,     0,     2,     3,     4,    19,    17,     0,
-     0,     0,    13,    14,    16,     0,     8,     0,     6,     0,
-     0,     0,     0,     5,    15,    20,     0,    18,     9,    10,
-    11,    12,     7,     0,     0
+     0,     0,     0,     0,     2,     3,     4,    20,    18,    13,
+     0,     0,    14,    15,    17,     0,     7,     0,     0,     0,
+     0,     0,     5,    16,    21,     0,    19,     8,     9,    10,
+     0,    11,     6,    12,     0,     0
 };
 
 static const short yydefgoto[] = {     1,
@@ -145,32 +149,34 @@ static const short yydefgoto[] = {     1,
 };
 
 static const short yypact[] = {-32768,
-     0,    -2,   -13,     1,-32768,-32768,-32768,-32768,     9,     4,
-     5,    16,    13,-32768,    32,     5,-32768,    33,-32768,     2,
-     5,     5,     5,-32768,-32768,-32768,    24,    32,-32768,    17,
-    17,-32768,-32768,    37,-32768
+     0,     6,    -5,     2,-32768,-32768,-32768,-32768,     9,-32768,
+     6,    23,    14,-32768,    19,     6,-32768,    33,    17,     6,
+     6,    -2,-32768,-32768,-32768,    31,    19,-32768,    10,    10,
+    33,-32768,-32768,    19,    34,-32768
 };
 
 static const short yypgoto[] = {-32768,
--32768,     7,-32768,    25,    22
+-32768,     8,-32768,    24,   -15
 };
 
 
-#define	YYLAST		40
+#define	YYLAST		46
 
 
-static const short yytable[] = {    34,
-     8,     9,    16,    10,     2,     3,     4,     8,     9,    21,
-    22,    23,     5,     6,    11,    17,     9,    20,    19,    29,
-    18,    11,    27,    21,    22,    23,    23,    30,    31,    32,
-    24,    21,    22,    23,    26,     8,    35,    25,    33,    28
+static const short yytable[] = {    35,
+     8,     9,    27,    10,     2,     3,     4,    31,     8,     9,
+    16,    10,     5,     6,    11,    34,    17,     9,    19,    22,
+    18,    25,    11,    26,    20,    21,    22,    29,    30,    32,
+    20,    21,    22,    36,    28,     8,    24,    23,    20,    21,
+    22,     0,     0,     0,     0,    33
 };
 
 static const short yycheck[] = {     0,
-     3,     4,    16,     6,     5,     6,     7,     3,     4,     8,
-     9,    10,    13,    14,    17,    15,     4,    11,    15,    18,
-    12,    17,    16,     8,     9,    10,    10,    21,    22,    23,
-    15,     8,     9,    10,     3,     3,     0,    13,    15,    18
+     3,     4,    18,     6,     5,     6,     7,    10,     3,     4,
+    16,     6,    13,    14,    17,    31,    15,     4,    11,    10,
+    12,     3,    17,    16,     8,     9,    10,    20,    21,    22,
+     8,     9,    10,     0,    18,     3,    13,    15,     8,     9,
+    10,    -1,    -1,    -1,    -1,    15
 };
 /* -*-C-*-  Note some compilers choke on comments on `#line' lines.  */
 #line 3 "bison.simple"
@@ -666,65 +672,69 @@ yyreduce:
 
 case 5:
 #line 48 "1.y"
-{ std::cout << *(yyvsp[-1]._poly) << std::endl; ;
+{ std::cout << *(yyvsp[-1]._poly) << std::endl;   ;
     break;}
 case 6:
 #line 49 "1.y"
-{ PrintIdentifier(yyvsp[-1].str);             ;
+{ AssignIdentifier(yyvsp[-3].str, (*yyvsp[-1]._poly));       ;
     break;}
 case 7:
 #line 50 "1.y"
-{ AssignIdentifier(yyvsp[-3].str, (*yyvsp[-1]._poly));     ;
+{;
     break;}
 case 8:
-#line 51 "1.y"
-{;
+#line 54 "1.y"
+{ (yyval._poly) = (yyvsp[-1]._poly);                               ;
     break;}
 case 9:
 #line 55 "1.y"
-{ (*yyval._poly) = (*yyvsp[-1]._poly);                     ;
+{ (*yyval._poly) = (*yyvsp[-2]._poly) + (*yyvsp[0]._poly);                     ;
     break;}
 case 10:
 #line 56 "1.y"
-{ (*yyval._poly) = (*yyvsp[-2]._poly) + (*yyvsp[0]._poly);             ;
+{ (*yyval._poly) = (*yyvsp[-2]._poly) - (*yyvsp[0]._poly);                     ;
     break;}
 case 11:
 #line 57 "1.y"
-{ (*yyval._poly) = (*yyvsp[-2]._poly) - (*yyvsp[0]._poly);             ;
+{ (*yyval._poly) = (*yyvsp[-2]._poly) * (*yyvsp[0]._poly);                     ;
     break;}
 case 12:
 #line 58 "1.y"
-{ (*yyval._poly) = (*yyvsp[-2]._poly) * (*yyvsp[0]._poly);             ;
+{ (*yyval._poly) = (*yyval._poly) ^ (yyvsp[0].num);                      ;
     break;}
 case 13:
-#line 60 "1.y"
-{ yyval._poly = new Polynom(*yyvsp[0]._pe);             ;
+#line 59 "1.y"
+{ yyval._poly = new Polynom(); (*yyval._poly) = GetPolynom(yyvsp[0].str) ;
     break;}
 case 14:
+#line 60 "1.y"
+{ yyval._poly = new Polynom(*yyvsp[0]._pe);                     ;
+    break;}
+case 15:
 #line 65 "1.y"
 { yyval._pe = new PolynomEntry((*yyvsp[0]._var));     ;
     break;}
-case 15:
+case 16:
 #line 66 "1.y"
 { yyval._pe->Append(*yyvsp[0]._var);                  ;
     break;}
-case 16:
+case 17:
 #line 67 "1.y"
 { yyval._pe = new PolynomEntry(yyvsp[0].num);  ;
     break;}
-case 17:
+case 18:
 #line 72 "1.y"
 { yyval._var = new Variable(yyvsp[0].let, 1);  ;
     break;}
-case 18:
+case 19:
 #line 73 "1.y"
 { yyval._var = new Variable(yyvsp[-2].let, yyvsp[0].num); ;
     break;}
-case 19:
+case 20:
 #line 78 "1.y"
 { yyval.num = yyvsp[0].num;                           ;
     break;}
-case 20:
+case 21:
 #line 79 "1.y"
 { yyval.num = yyvsp[-1].num * 10 + yyvsp[0].num;                 ;
     break;}

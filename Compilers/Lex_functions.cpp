@@ -15,6 +15,7 @@ INPUT_TYPE       CurrentSymbol;
 extern FILE    * yyin;
 
 std::map<std::string, Polynom> IdentifiersDatabase;
+std::vector<std::string> GlobalBuffers;
 
 std::string GlobalBuf;
 
@@ -32,9 +33,9 @@ int FoundToken(int signature, INPUT_TYPE symb)
 {
 	switch (signature)
 	{
-		case (DIGIT):  { yylval.num = symb - '0';  break; }
-		case (LETTER): { yylval.let = symb;        break; }
-		//case (IDENTIFIER): { yylval.str}
+		case (DIGIT)      : { yylval.num = symb - '0';                       break; }
+		case (LETTER)     : { yylval.let = symb;                             break; }
+		case (IDENTIFIER) : { yylval.str = (--GlobalBuffers.end())->c_str(); break; }
 	}
 	return (signature);
 }
@@ -57,7 +58,6 @@ void ReadAllLettersAfterCurrentSymbol(std::string & buf)
 	}
 
 	std::ungetc(CurrentSymbol, yyin);
-	//buf.erase(--buf.end());
 }
 
 void ReturnLettersToSTDIN(std::string & buf)
@@ -77,20 +77,15 @@ int yyerror(const char * err)
 int yylex()
 {
 	SkipGarbage();
-
+	std::string buf;
 	if (std::isdigit(CurrentSymbol)) { return FoundToken(DIGIT, CurrentSymbol); }
 
 	else if (std::isalpha(CurrentSymbol) || CurrentSymbol == '$')
 	{
-		std::string buf;
 		ReadAllLettersAfterCurrentSymbol(buf);
 
-		std::cout << "";
+		if (buf == "print") { return FoundToken(PRINT, NULL); }
 
-		if      (buf == "print")             
-		{
-			return FoundToken(PRINT, NULL); 
-		}
 		else if (*buf.begin() == '$') 
 		{
 			buf.erase(buf.begin());
@@ -98,12 +93,11 @@ int yylex()
 			{
 				return FoundToken(DECLARATION, NULL); 
 			}
-			else                              { return Error("Redeclaration");        }
+			else { return Error("Redeclaration");        }
 		}
 		else if (IdentifierExists(buf))      
 		{
-			GlobalBuf = buf;
-			yylval.str = (char*)GlobalBuf.c_str();
+			GlobalBuffers.push_back(buf);
 			return FoundToken(IDENTIFIER, NULL); 
 		}
 		else

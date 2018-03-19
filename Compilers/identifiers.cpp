@@ -1,5 +1,4 @@
 #include "identifiers.h"
-
 #include <map>
 
 extern std::map<std::string, Polynom> IdentifiersDatabase;
@@ -16,28 +15,13 @@ bool IdentifierExists(std::string name)
 	return (IdentifiersDatabase.find(name) != IdentifiersDatabase.end());
 }
 
-void PrintIdentifier(char * name)
-{
-	std::cout << (*IdentifiersDatabase.find(name)).second << std::endl;
-}
-
-void AssignIdentifier(char * name, Polynom value) // name - NULL
+void AssignIdentifier(const char * name, Polynom value) 
 {
 	IdentifiersDatabase.erase(name); 
 	IdentifiersDatabase.insert(std::make_pair(std::string(name), value));
 }
 
-Polynom AddIdentifiers(std::string first, std::string second)
+Polynom GetPolynom(const char * name)
 {
-	return (*IdentifiersDatabase.find(first)).second + (*IdentifiersDatabase.find(second)).second;
-}
-
-Polynom SubIdentifiers(std::string first, std::string second)
-{
-	return (*IdentifiersDatabase.find(first)).second - (*IdentifiersDatabase.find(second)).second;
-}
-
-Polynom MulIdentifiers(std::string first, std::string second)
-{
-	return (*IdentifiersDatabase.find(first)).second * (*IdentifiersDatabase.find(second)).second;
+	return (IdentifiersDatabase.find(name)->second);
 }
