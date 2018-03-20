@@ -44,7 +44,7 @@ source:
 	source begin  
 
 begin:
-    
+    ';' |
 	PRINT polynom ';'           { std::cout << *($2) << std::endl;   } |
 	IDENTIFIER '=' polynom ';'  { AssignIdentifier($1, (*$3));       } |
 	DECLARATION ';'             { } |
@@ -56,6 +56,7 @@ polynom:
 	polynom '+' polynom            { (*$$) = (*$1) + (*$3);                     } |
 	polynom '-' polynom            { (*$$) = (*$1) - (*$3);                     } |
 	polynom '*' polynom            { (*$$) = (*$1) * (*$3);                     } |
+	'-' polynom %prec UMINUS       { $$ = new Polynom(); (*$$) = $2->Uminus();  } |
     IDENTIFIER                     { $$ = new Polynom(); (*$$) = GetPolynom($1) } |
 	polynom_entry                  { $$ = new Polynom(*$1);                     } 
 	;

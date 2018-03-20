@@ -104,6 +104,7 @@ int yylex()
 		else if (*buf.begin() == '$') 
 		{
 			buf.erase(buf.begin());
+			if (buf == "print") { return Error("print var prohibited"); }
 			if (AddIdentifierInDatabase(buf.c_str())) 
 			{
 				GlobalBuffers.push_back(buf);

@@ -70,6 +70,16 @@ void Polynom::AddSuch()
 	this->entries = result;
 }
 
+Polynom Polynom::Uminus()
+{
+	std::vector<PolynomEntry> ret;
+	for (auto it : entries)
+	{
+		ret.push_back(it * PolynomEntry(-1));
+	}
+	return Polynom(ret);
+}
+
 void Polynom::Append(PolynomEntry pe)
 {
 	this->entries.push_back(pe);

@@ -28,6 +28,9 @@ public:
 	const std::vector<PolynomEntry> GetEntries()  const   ;
 	void                            Append(PolynomEntry)  ;
 
+	Polynom Uminus();
+
+
 	Polynom operator =  (const Polynom &);
 	Polynom operator +  (const Polynom &);
 	Polynom operator -  (const Polynom &);
