@@ -1,4 +1,6 @@
-print (-(2x * 4y) * z) + 7xyz;;;
-
-
-
+print 2xy * (-1);;;
+# dkfd;slfkds;l
+print kek;
+print -2xc;
+print 1;
+print

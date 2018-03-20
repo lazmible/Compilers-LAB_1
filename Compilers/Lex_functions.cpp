@@ -33,9 +33,10 @@ void SkipGarbage()
 
 void SkipComment()
 {
+	Lines++;
 	while ((CurrentSymbol = std::fgetc(yyin)) != '\n');
 	SkipGarbage();
-	Lines++;
+	
 }
 
 int FoundToken(int signature, INPUT_TYPE symb)
@@ -74,12 +75,14 @@ void ReturnLettersToSTDIN(std::string & buf)
 {
 	for (auto it = --buf.end(); it != buf.begin(); it--)
 	{
+		if (*it == '\n') { Lines--; }
 		std::ungetc(*it, yyin);
 	}
 }
 
 int yyerror(const char * err)
 {
+//	Lines++;
 	std::cout << err << " on line: " << Lines << std::endl;
 	return -1;
 }
@@ -88,6 +91,7 @@ int yylex()
 {
 	SkipGarbage();
 	std::string buf;
+
 	if (std::isdigit(CurrentSymbol)) { return FoundToken(DIGIT, CurrentSymbol); }
 
 	else if (std::isalpha(CurrentSymbol) || CurrentSymbol == '$' || CurrentSymbol == '#')
@@ -124,5 +128,10 @@ int yylex()
 		}
 	}
 
-	else { return (CurrentSymbol); }
+	else 
+	{
+		if (CurrentSymbol == '\n') { Lines++;  }
+		if (CurrentSymbol == EOF)  { return 0; }
+		return (CurrentSymbol); 
+	}
 }
