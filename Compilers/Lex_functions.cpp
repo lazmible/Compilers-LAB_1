@@ -80,7 +80,7 @@ void ReturnLettersToSTDIN(std::string & buf)
 
 int yyerror(const char * err)
 {
-	std::cout << err << /*" on line: " << Lines <<*/ std::endl;
+	std::cout << err << " on line: " << Lines << std::endl;
 	return -1;
 }
 

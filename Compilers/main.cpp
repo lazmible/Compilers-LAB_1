@@ -14,7 +14,6 @@ int yyerror(const char * err);
 
 extern std::vector<std::string> GlobalBuffers;
 
-
 int main()
 {
 	GlobalBuffers.reserve(1000000);
