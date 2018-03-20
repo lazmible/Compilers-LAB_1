@@ -24,10 +24,13 @@ void SkipGarbage()
 	   (CurrentSymbol = std::fgetc(yyin)) == ' ' ||
 	    CurrentSymbol == '\t'                    ||
 	    CurrentSymbol == '\n'
-    );
+    )
 
 	{
-		if (CurrentSymbol == '\n') { Lines++; }
+		if (CurrentSymbol == '\n') 
+		{
+			Lines++; 
+		}
 	}
 }
 
@@ -130,7 +133,10 @@ int yylex()
 
 	else 
 	{
-		if (CurrentSymbol == '\n') { Lines++;  }
+		if (CurrentSymbol == '\n') 
+		{
+			Lines++;  
+		}
 		if (CurrentSymbol == EOF)  { return 0; }
 		return (CurrentSymbol); 
 	}

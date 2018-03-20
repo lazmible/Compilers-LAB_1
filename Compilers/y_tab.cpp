@@ -19,7 +19,9 @@
     int  yyerror (const char * err);
     int  yylex   ();
 
-#line 9 "1.y"
+	extern std::size_t Lines;
+
+#line 11 "1.y"
 typedef union	
 {
 	class Variable     *  _var   ;
@@ -113,9 +115,9 @@ static const short yyrhs[] = {    -1,
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    40,    41,    42,    43,    46,    47,    48,    49,    50,    53,
-    55,    56,    57,    58,    59,    60,    64,    66,    67,    71,
-    73,    77,    79
+    42,    43,    44,    45,    48,    49,    50,    51,    52,    55,
+    57,    58,    59,    60,    61,    62,    66,    68,    69,    73,
+    75,    79,    81
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","DIGIT",
@@ -672,76 +674,80 @@ yyreduce:
 
   switch (yyn) {
 
+case 2:
+#line 44 "1.y"
+{ std::cout << "LINES" << std::endl; ;
+    break;}
 case 6:
-#line 48 "1.y"
+#line 50 "1.y"
 { std::cout << *(yyvsp[-1]._poly) << std::endl;   ;
     break;}
 case 7:
-#line 49 "1.y"
-{ AssignIdentifier(yyvsp[-3].str, (*yyvsp[-1]._poly));       ;
-    break;}
-case 8:
-#line 50 "1.y"
-{ ;
-    break;}
-case 9:
 #line 51 "1.y"
 { AssignIdentifier(yyvsp[-3].str, (*yyvsp[-1]._poly));       ;
     break;}
+case 8:
+#line 52 "1.y"
+{ ;
+    break;}
+case 9:
+#line 53 "1.y"
+{ AssignIdentifier(yyvsp[-3].str, (*yyvsp[-1]._poly));       ;
+    break;}
 case 10:
-#line 55 "1.y"
+#line 57 "1.y"
 { (yyval._poly) = (yyvsp[-1]._poly);                               ;
     break;}
 case 11:
-#line 56 "1.y"
+#line 58 "1.y"
 { (*yyval._poly) = (*yyvsp[-2]._poly) + (*yyvsp[0]._poly);                     ;
     break;}
 case 12:
-#line 57 "1.y"
+#line 59 "1.y"
 { (*yyval._poly) = (*yyvsp[-2]._poly) - (*yyvsp[0]._poly);                     ;
     break;}
 case 13:
-#line 58 "1.y"
+#line 60 "1.y"
 { (*yyval._poly) = (*yyvsp[-2]._poly) * (*yyvsp[0]._poly);                     ;
     break;}
 case 14:
-#line 59 "1.y"
-{yyval._poly = new Polynom(); (*yyval._poly) = yyvsp[0]._poly->Uminus();;
+#line 61 "1.y"
+{ yyval._poly = new Polynom(); (*yyval._poly) = yyvsp[0]._poly->Uminus();  ;
     break;}
 case 15:
-#line 60 "1.y"
+#line 62 "1.y"
 { yyval._poly = new Polynom(); (*yyval._poly) = GetPolynom(yyvsp[0].str) ;
     break;}
 case 16:
-#line 61 "1.y"
+#line 63 "1.y"
 { yyval._poly = new Polynom(*yyvsp[0]._pe);                     ;
     break;}
 case 17:
-#line 66 "1.y"
+#line 68 "1.y"
 { yyval._pe = new PolynomEntry((*yyvsp[0]._var));     ;
     break;}
 case 18:
-#line 67 "1.y"
+#line 69 "1.y"
 { yyval._pe->Append(*yyvsp[0]._var);                  ;
     break;}
 case 19:
-#line 68 "1.y"
+#line 70 "1.y"
 { yyval._pe = new PolynomEntry(yyvsp[0].num);  ;
     break;}
 case 20:
-#line 73 "1.y"
+#line 75 "1.y"
 { yyval._var = new Variable(yyvsp[0].let, 1);  ;
     break;}
 case 21:
-#line 74 "1.y"
+#line 76 "1.y"
 { yyval._var = new Variable(yyvsp[-2].let, yyvsp[0].num); ;
     break;}
 case 22:
-#line 79 "1.y"
+#line 81 "1.y"
 { yyval.num = yyvsp[0].num;                           ;
     break;}
 case 23:
-#line 80 "1.y"
+#line 82 "1.y"
 { yyval.num = yyvsp[-1].num * 10 + yyvsp[0].num;                 ;
     break;}
 }
@@ -942,4 +948,4 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 83 "1.y"
+#line 85 "1.y"

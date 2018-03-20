@@ -1,6 +1,5 @@
 print 2xy * (-1);;;
-# dkfd;slfkds;l
-print kek;
 print -2xc;
-print 1;
+print 1; print 2;
+print 3x * 4y;
 print
