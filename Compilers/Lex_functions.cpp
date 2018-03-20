@@ -85,7 +85,6 @@ void ReturnLettersToSTDIN(std::string & buf)
 
 int yyerror(const char * err)
 {
-//	Lines++;
 	std::cout << err << " on line: " << Lines << std::endl;
 	return -1;
 }
@@ -133,10 +132,7 @@ int yylex()
 
 	else 
 	{
-		if (CurrentSymbol == '\n') 
-		{
-			Lines++;  
-		}
+		if (CurrentSymbol == '\n') { Lines++;  }
 		if (CurrentSymbol == EOF)  { return 0; }
 		return (CurrentSymbol); 
 	}

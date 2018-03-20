@@ -1,5 +1,4 @@
 print 2xy * (-1);;;
 print -2xc;
-print 1; print 2;
-print 3x * 4y;
-print
+#print 1; print 2;
+#print 3x * 4y;
