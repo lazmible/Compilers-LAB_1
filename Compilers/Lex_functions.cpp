@@ -65,7 +65,7 @@ void ReadAllLettersAfterCurrentSymbol(std::string & buf)
 	buf += CurrentSymbol;
 	CurrentSymbol = std::fgetc(yyin);
 
-	while (std::isalnum(CurrentSymbol))
+	while (std::isalnum(CurrentSymbol) || CurrentSymbol == '$')
 	{
 		buf += CurrentSymbol;
 		CurrentSymbol = std::fgetc(yyin);
@@ -107,26 +107,29 @@ int yylex()
 
 		if (buf == "print") { return FoundToken(PRINT, NULL); }
 
-		else if (*buf.begin() == '$') 
+		else if (*buf.begin() == '$' && *(++buf.begin()) == '$' && buf.size() >= 2) 
 		{
 			buf.erase(buf.begin());
-			if (buf == "print") { return Error("print var prohibited"); }
+			buf.erase(buf.begin());
+			if (buf == "print") { return Error("name <print> is reserved"); }
 			if (AddIdentifierInDatabase(buf.c_str())) 
 			{
 				GlobalBuffers.push_back(buf);
 				return FoundToken(DECLARATION, NULL); 
 			}
-			else { return Error("Redeclaration");        }
+			else { return Error("Redeclaration of variable: " + buf);        }
 		}
-		else if (IdentifierExists(buf))      
+		else if (*buf.begin() == '$')
 		{
-			GlobalBuffers.push_back(buf);
-			return FoundToken(IDENTIFIER, NULL); 
+			buf.erase(buf.begin());
+			if (IdentifierExists(buf))
+			{
+				GlobalBuffers.push_back(buf);
+				return FoundToken(IDENTIFIER, NULL);
+			}
+			else { return Error("Undeclared identifier: " + buf); }
 		}
-		else if (CurrentSymbol == EOF)
-		{
-			return 0;
-		}
+		else if (CurrentSymbol == EOF) { return 0; }
 		else
 		{
 			ReturnLettersToSTDIN(buf);
