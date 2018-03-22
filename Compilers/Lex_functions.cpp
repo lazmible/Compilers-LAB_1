@@ -123,6 +123,10 @@ int yylex()
 			GlobalBuffers.push_back(buf);
 			return FoundToken(IDENTIFIER, NULL); 
 		}
+		else if (CurrentSymbol == EOF)
+		{
+			return 0;
+		}
 		else
 		{
 			ReturnLettersToSTDIN(buf);

@@ -8,17 +8,20 @@ std::ostream & operator << (std::ostream & stream, const Polynom & poly)
 	{
 		auto first = entries.begin();
 
-		if      (first->GetCoeff() < 0) { stream << " - " << *first; }
-		else if (first->GetCoeff() > 0) { stream << *first; }
+		if      (first->GetCoeff() < 0)   { stream << " - " << *first; }
+		else if (first->GetCoeff() > 0)   { stream << *first;          }
+		else if (first->GetVar().empty()) { stream << *first;          }
 
 		entries.erase(first);
 
 		for (auto it : entries)
 		{
-			if (it.GetCoeff() > 0)      { stream << " + " << it; }
-			else if (it.GetCoeff() < 0) { stream << " - " << it; }
+			if (it.GetCoeff() > 0)        { stream << " + " << it; }
+			else if (it.GetCoeff() < 0)   { stream << " - " << it; }
+			else if (it.GetVar().empty()) { stream << *first; }
 		}
 	}
+	else { stream << "0"; }
 	return (stream);
 }
 
