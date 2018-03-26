@@ -111,6 +111,9 @@ int yylex()
 		{
 			buf.erase(buf.begin());
 			buf.erase(buf.begin());
+
+			for (auto it : buf) { if (it == '$') { return Error("Invalid symbol <$> in variable name"); } }
+
 			if (buf == "print") { return Error("name <print> is reserved"); }
 			if (AddIdentifierInDatabase(buf.c_str())) 
 			{
