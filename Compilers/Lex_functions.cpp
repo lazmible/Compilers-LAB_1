@@ -37,9 +37,8 @@ void SkipGarbage()
 void SkipComment()
 {
 	Lines++;
-	while ((CurrentSymbol = std::fgetc(yyin)) != '\n');
+	while ((CurrentSymbol = std::fgetc(yyin)) != '\n' && CurrentSymbol != EOF);
 	SkipGarbage();
-	
 }
 
 int FoundToken(int signature, INPUT_TYPE symb)
@@ -100,14 +99,17 @@ int yylex()
 	{
 		if (CurrentSymbol == '#') 
 		{
-			while (CurrentSymbol == '#') { SkipComment(); }
+			while (CurrentSymbol == '#') 
+			{ 
+				SkipComment(); 
+			}
 		}
 
 		ReadAllLettersAfterCurrentSymbol(buf);
 
 		if (buf == "print") { return FoundToken(PRINT, NULL); }
 
-		else if (*buf.begin() == '$' && *(++buf.begin()) == '$' && buf.size() >= 2) 
+		else if (*buf.begin() == '$' && *(++buf.begin()) == '$') 
 		{
 			buf.erase(buf.begin());
 			buf.erase(buf.begin());
