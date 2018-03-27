@@ -2,7 +2,7 @@
 
 const std::string alphabet =
 {
-	"abcdefghijklmnopqrstuvwxyz"
+	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 };
 
 std::ostream & operator << (std::ostream & stream, const PolynomEntry & entry)

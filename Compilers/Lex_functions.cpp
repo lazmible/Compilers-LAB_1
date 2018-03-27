@@ -9,7 +9,7 @@
 #include "identifiers.h"
 
 
-typedef char INPUT_TYPE;
+typedef int INPUT_TYPE;
 
 INPUT_TYPE                       CurrentSymbol;
 extern FILE                    * yyin;
@@ -117,12 +117,13 @@ int yylex()
 			for (auto it : buf) { if (it == '$') { return Error("Invalid symbol <$> in variable name"); } }
 
 			if (buf == "print") { return Error("name <print> is reserved"); }
+
 			if (AddIdentifierInDatabase(buf.c_str())) 
 			{
 				GlobalBuffers.push_back(buf);
 				return FoundToken(DECLARATION, NULL); 
 			}
-			else { return Error("Redeclaration of variable: " + buf);        }
+			else { return Error("Redeclaration of variable: " + buf); }
 		}
 		else if (*buf.begin() == '$')
 		{
