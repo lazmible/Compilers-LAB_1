@@ -104,6 +104,7 @@ int yylex()
 				SkipComment(); 
 			}
 		}
+		if (CurrentSymbol == ';') { goto KOSTIL; }
 
 		ReadAllLettersAfterCurrentSymbol(buf);
 
@@ -145,6 +146,7 @@ int yylex()
 
 	else 
 	{
+		KOSTIL:
 		if (CurrentSymbol == '\n') { Lines++;  }
 		if (CurrentSymbol == EOF)  { return 0; }
 		return (CurrentSymbol); 
