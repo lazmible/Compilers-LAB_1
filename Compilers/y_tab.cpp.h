@@ -12,7 +12,12 @@ typedef union
 #define	PRINT	260
 #define	IDENTIFIER	261
 #define	DECLARATION	262
-#define	UMINUS	263
+#define	ASSIGN	263
+#define	SEMICOLON	264
+#define	PLUS	265
+#define	MINUS	266
+#define	MULTIPLE	267
+#define	UMINUS	268
 
 
 extern YYSTYPE yylval;

@@ -17,6 +17,16 @@ std::size_t                      Lines = 1;
 std::map<std::string, Polynom>   IdentifiersDatabase;
 std::vector<std::string>         GlobalBuffers;
 
+inline bool is_operator(INPUT_TYPE c)
+{
+	return (c == '+' || c == '-' || c == '*' || c == '=' || c == '^');
+}
+
+inline bool is_key_symbol(INPUT_TYPE c)
+{
+	return (c == '$' || c == ';' || c == '#');
+}
+
 void SkipGarbage()
 {
 	while 
@@ -36,7 +46,7 @@ void SkipGarbage()
 
 void SkipComment()
 {
-	Lines++;
+	Lines++; 
 	while ((CurrentSymbol = std::fgetc(yyin)) != '\n' && CurrentSymbol != EOF);
 	SkipGarbage();
 }
@@ -84,7 +94,16 @@ void ReturnLettersToSTDIN(std::string & buf)
 
 int yyerror(const char * err)
 {
-	std::cout << err << " on line: " << Lines << std::endl;
+	std::cout << err << " on line " << Lines << ": ";
+	if (is_operator(CurrentSymbol))
+	{
+		std::cout << "invalid operator" << std::endl;
+	}
+	else if (!std::isalnum(CurrentSymbol) && !is_key_symbol(CurrentSymbol))
+	{
+		std::cout << "invalid lexem: " << char(CurrentSymbol)  << std::endl;
+	}
+	else { std::cout << std::endl; }
 	return -1;
 }
 
@@ -108,21 +127,21 @@ int yylex()
 
 		ReadAllLettersAfterCurrentSymbol(buf);
 
-		if (buf == "print") { return FoundToken(PRINT, NULL); }
+		if (buf == "print") { return FoundToken(PRINT, 0); }
 
 		else if (*buf.begin() == '$' && *(++buf.begin()) == '$') 
 		{
 			buf.erase(buf.begin());
 			buf.erase(buf.begin());
 
-			for (auto it : buf) { if (it == '$') { return Error("Invalid symbol <$> in variable name"); } }
+			for (auto it : buf) { if (!std::isalnum(it)) { return Error("Invalid symbols in variable name"); } }
 
 			if (buf == "print") { return Error("name <print> is reserved"); }
 
 			if (AddIdentifierInDatabase(buf.c_str())) 
 			{
 				GlobalBuffers.push_back(buf);
-				return FoundToken(DECLARATION, NULL); 
+				return FoundToken(DECLARATION, 0); 
 			}
 			else { return Error("Redeclaration of variable: " + buf); }
 		}
@@ -132,7 +151,7 @@ int yylex()
 			if (IdentifierExists(buf))
 			{
 				GlobalBuffers.push_back(buf);
-				return FoundToken(IDENTIFIER, NULL);
+				return FoundToken(IDENTIFIER, 0);
 			}
 			else { return Error("Undeclared identifier: " + buf); }
 		}

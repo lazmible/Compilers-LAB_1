@@ -19,6 +19,5 @@ int main()
 	GlobalBuffers.reserve(1000000);
 	yyin = fopen(FILENAME, "r");
 	yyparse();
-	
 	system("pause");
 }

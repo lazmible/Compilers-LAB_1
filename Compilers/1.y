@@ -4,6 +4,8 @@
 
     int  yyerror (const char * err);
     int  yylex   ();
+	
+	extern FILE                    * yyin;
 %}
 
 %union	
@@ -25,7 +27,7 @@
 %type <let>   LETTER
 
 %token <str>  PRINT IDENTIFIER DECLARATION
-%token        DIGIT LETTER 
+%token        DIGIT LETTER ASSIGN SEMICOLON PLUS MINUS MULTIPLE BAD
 
 %left '+' '-'
 %left '*'
@@ -44,12 +46,12 @@ source:
 	source begin  
 
 begin:
-    ';' |
-	PRINT polynom ';'           { std::cout << *($2) << std::endl;   } |
-	IDENTIFIER '=' polynom ';'  { AssignIdentifier($1, (*$3));       } |
-	DECLARATION ';'             { } |
-	DECLARATION '=' polynom ';' { AssignIdentifier($1, (*$3));       } 
-
+    ';'                          {                                           } |
+	PRINT polynom ';'            { std::cout << *($2) << std::endl;          } |
+	IDENTIFIER '=' polynom ';'   { AssignIdentifier($1, (*$3));              } |
+	DECLARATION '=' polynom ';'  { AssignIdentifier($1, (*$3));              } |
+	DECLARATION ';'              {                                           } 
+	
 polynom:
 
 	'('polynom')'                  { ($$) = ($2);                               } |
@@ -79,5 +81,6 @@ number:
 	DIGIT                   { $$ = $1;                           } |
 	number DIGIT            { $$ = $1 * 10 + $2;                 }
 	;
+
 
 %%
