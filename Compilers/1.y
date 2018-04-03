@@ -5,7 +5,7 @@
     int  yyerror (const char * err);
     int  yylex   ();
 	
-	extern FILE                    * yyin;
+	extern FILE  * yyin;
 %}
 
 %union	
@@ -46,41 +46,43 @@ source:
 	source begin  
 
 begin:
-    ';'                          {                                           } |
-	PRINT polynom ';'            { std::cout << *($2) << std::endl;          } |
-	IDENTIFIER '=' polynom ';'   { AssignIdentifier($1, (*$3));              } |
-	DECLARATION '=' polynom ';'  { AssignIdentifier($1, (*$3));              } |
-	DECLARATION ';'              {                                           } 
+    ';'                            {                                                 } |
+	PRINT polynom ';'              { std::cout << *($2) << std::endl;                } |
+	IDENTIFIER '=' polynom ';'     { AssignIdentifier($1, (*$3));                    } |
+	DECLARATION '=' polynom ';'    { AssignIdentifier($1, (*$3));                    } |
+	DECLARATION ';'                {                                                 } 
 	
 polynom:
 
-	'('polynom')'                  { ($$) = ($2);                               } |
-	polynom '+' polynom            { (*$$) = (*$1) + (*$3);                     } |
-	polynom '-' polynom            { (*$$) = (*$1) - (*$3);                     } |
-	polynom '*' polynom            { (*$$) = (*$1) * (*$3);                     } |
-	'-' polynom %prec UMINUS       { $$ = new Polynom(); (*$$) = $2->Uminus();  } |
-    IDENTIFIER                     { $$ = new Polynom(); (*$$) = GetPolynom($1) } |
-	polynom_entry                  { $$ = new Polynom(*$1);                     } 
+	'('polynom')'                  { ($$) = ($2);                                    } |
+	polynom '+' polynom            { (*$$) = (*$1) + (*$3);                          } |
+	polynom '-' polynom            { (*$$) = (*$1) - (*$3);                          } |
+	polynom '*' polynom            { (*$$) = (*$1) * (*$3);                          } |
+	'-' polynom %prec UMINUS       { $$ = new Polynom(); (*$$) = $2->Uminus();       } |
+    IDENTIFIER                     { $$ = new Polynom(); (*$$) = GetPolynom($1)      } |
+	polynom_entry                  { $$ = new Polynom(*$1);                          } |
+	'+' polynom                    { GenerateError("Invalid usage of operator '+'"); } |
+	'*' polynom                    { GenerateError("Invalid usage of operator '*'"); } |
+	polynom '+' '+'                { GenerateError("Invalid usage of operator '+'"); } 
+
 	;
 
 polynom_entry:
 
-	variable                { $$ = new PolynomEntry((*$1));     } |
-	polynom_entry variable  { $$->Append(*$2);                  } |
-	number                  { $$ = new PolynomEntry($1);  } 
+	variable                       { $$ = new PolynomEntry((*$1));                   } |
+	polynom_entry variable         { $$->Append(*$2);                                } |
+	number                         { $$ = new PolynomEntry($1);                      } 
 	;
 
 variable: 
 
-	LETTER                      { $$ = new Variable($1, 1);  } |
-	LETTER '^' number           { $$ = new Variable($1, $3); } 
-	;
+	LETTER                         { $$ = new Variable($1, 1);                       } |
+	LETTER '^' number              { $$ = new Variable($1, $3);                      } 
+	; 
 
 number: 
 	
-	DIGIT                   { $$ = $1;                           } |
-	number DIGIT            { $$ = $1 * 10 + $2;                 }
+	DIGIT                          { $$ = $1;                                        } |
+	number DIGIT                   { $$ = $1 * 10 + $2;                              }
 	;
-
-
 %%

@@ -17,7 +17,8 @@ typedef union
 #define	PLUS	265
 #define	MINUS	266
 #define	MULTIPLE	267
-#define	UMINUS	268
+#define	BAD	268
+#define	UMINUS	269
 
 
 extern YYSTYPE yylval;

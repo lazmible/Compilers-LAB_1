@@ -31,7 +31,7 @@ void SkipGarbage()
 {
 	while 
     (
-	   (CurrentSymbol = std::fgetc(yyin)) == ' ' ||
+	   (CurrentSymbol = fgetc(yyin)) == ' ' ||
 	    CurrentSymbol == '\t'                    ||
 	    CurrentSymbol == '\n'
     )
@@ -47,7 +47,7 @@ void SkipGarbage()
 void SkipComment()
 {
 	Lines++; 
-	while ((CurrentSymbol = std::fgetc(yyin)) != '\n' && CurrentSymbol != EOF);
+	while ((CurrentSymbol = fgetc(yyin)) != '\n' && CurrentSymbol != EOF);
 	SkipGarbage();
 }
 
@@ -72,15 +72,15 @@ int Error(std::string msg)
 void ReadAllLettersAfterCurrentSymbol(std::string & buf)
 {
 	buf += CurrentSymbol;
-	CurrentSymbol = std::fgetc(yyin);
+	CurrentSymbol = fgetc(yyin);
 
-	while (std::isalnum(CurrentSymbol) || CurrentSymbol == '$')
+	while (isalnum(CurrentSymbol) || CurrentSymbol == '$')
 	{
 		buf += CurrentSymbol;
-		CurrentSymbol = std::fgetc(yyin);
+		CurrentSymbol = fgetc(yyin);
 	}
 
-	std::ungetc(CurrentSymbol, yyin);
+	ungetc(CurrentSymbol, yyin);
 }
 
 void ReturnLettersToSTDIN(std::string & buf)
@@ -88,22 +88,13 @@ void ReturnLettersToSTDIN(std::string & buf)
 	for (auto it = --buf.end(); it != buf.begin(); it--)
 	{
 		if (*it == '\n') { Lines--; }
-		std::ungetc(*it, yyin);
+		ungetc(*it, yyin);
 	}
 }
 
 int yyerror(const char * err)
 {
-	std::cout << err << " on line " << Lines << ": ";
-	if (is_operator(CurrentSymbol))
-	{
-		std::cout << "invalid operator" << std::endl;
-	}
-	else if (!std::isalnum(CurrentSymbol) && !is_key_symbol(CurrentSymbol))
-	{
-		std::cout << "invalid lexem: " << char(CurrentSymbol)  << std::endl;
-	}
-	else { std::cout << std::endl; }
+	std::cout << err << " on line " << Lines << ": " << std::endl;
 	return -1;
 }
 
@@ -112,9 +103,9 @@ int yylex()
 	SkipGarbage();
 	std::string buf;
 
-	if (std::isdigit(CurrentSymbol)) { return FoundToken(DIGIT, CurrentSymbol); }
+	if (isdigit(CurrentSymbol)) { return FoundToken(DIGIT, CurrentSymbol); }
 
-	else if (std::isalpha(CurrentSymbol) || CurrentSymbol == '$' || CurrentSymbol == '#')
+	else if (isalpha(CurrentSymbol) || CurrentSymbol == '$' || CurrentSymbol == '#')
 	{
 		if (CurrentSymbol == '#') 
 		{
@@ -134,7 +125,7 @@ int yylex()
 			buf.erase(buf.begin());
 			buf.erase(buf.begin());
 
-			for (auto it : buf) { if (!std::isalnum(it)) { return Error("Invalid symbols in variable name"); } }
+			for (auto it : buf) { if (!isalnum(it)) { return Error("Invalid symbols in variable name"); } }
 
 			if (buf == "print") { return Error("name <print> is reserved"); }
 

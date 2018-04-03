@@ -2,9 +2,10 @@
 
 std::ostream & operator << (std::ostream & stream, const Variable & var)
 {
-	if      (var.degree != 1) { stream << var.letter << "^" << var.degree; }
-	else if (var.degree == 1) { stream << var.letter;                      }
+	
+	if      (var.degree == 1) { stream << var.letter;                      }
 	else if (var.degree == 0) { stream << "";                              }
+	else if (var.degree != 1) { stream << var.letter << "^" << var.degree; }
 
 	return (stream);
 }

@@ -2,6 +2,7 @@
 #include <map>
 
 extern std::map<std::string, Polynom> IdentifiersDatabase;
+extern std::size_t Lines;
 
 bool AddIdentifierInDatabase(const char * name)
 {
@@ -24,4 +25,11 @@ void AssignIdentifier(const char * name, Polynom value)
 Polynom GetPolynom(const char * name)
 {
 	return (IdentifiersDatabase.find(name)->second);
+}
+
+void GenerateError(const char * error)
+{
+	std::cout << error << ". On line: " << Lines << std::endl;
+	system("pause");
+	exit(1);
 }

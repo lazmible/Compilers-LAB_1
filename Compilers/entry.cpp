@@ -9,10 +9,18 @@ std::ostream & operator << (std::ostream & stream, const PolynomEntry & entry)
 {
 	if (!entry.var.empty())
 	{
-		if (entry.coeff != 1 && entry.coeff != -1) { stream << std::abs(entry.coeff); }
+		if (entry.coeff != 1 && entry.coeff != -1) 
+		{
+			stream << std::abs(entry.coeff);
+			for (auto it : entry.var) { stream << it; }
+		}
+		else { stream << std::abs(entry.coeff); }
 	}
-	else { stream << std::abs(entry.coeff); }
-	for (auto it : entry.var) { stream << it; }
+	else 
+	{
+		stream << std::abs(entry.coeff);
+		for (auto it : entry.var) { stream << it; }
+	}
 	return (stream);
 }
 
